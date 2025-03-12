@@ -1,6 +1,6 @@
 // bienes.ts
 
-export interface Assets {
+export interface Asset {
   id: number;
   name: string;
   description: string;
