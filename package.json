@@ -28,6 +28,6 @@
   },
   "dependencies": {
     "inquirer": "^12.4.3",
-    "lowdb": "^5.1.0"
+    "lowdb": "^7.0.1"
   }
 }

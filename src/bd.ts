@@ -1,51 +1,105 @@
 // db.ts
-import {Low } from 'lowdb';
-import { JSONFile } from 'lowdb/node';
+import { Low, LowSync } from 'lowdb';
+import { JSONFile, JSONFileSync } from 'lowdb/node';
 
-type GenericValue = string | number | boolean | object | null;
-
-export interface DataEntry {
-  id: number;
-  key: string;
-  value: GenericValue;
-  type: string;
+export interface DataEntry<Data> {
+  key: number;
+  value: Data;
 }
 
-export interface Database {
-  data: DataEntry[];
+export interface Database<T> {
+  data: DataEntry<T>[];
 }
 
-export class GenericDatabase {
-  private _db: Low<Database>;
+export class GenericDatabase<T> {
+  private _db: LowSync<Database<T>>;
 
-  constructor(dbFile: string = 'db.json') {
-    const adapter = new JSONFile<Database>(dbFile);
-    this._db = new Low<Database>(adapter, { data: [] });
+  constructor(dbFile: string = './db/db.json') {
+    const adapter = new JSONFileSync<Database<T>>(dbFile);
+    
+    this._db = new LowSync<Database<T>>(adapter, {data: []});
+    this._db.read();
   }
 
-  // async init() {
-  //   await this.db.read();
-  // }
+  filterEntry(key: number): T | undefined {
+    const result : T | undefined = this._db.data.data.find((val: DataEntry<T>) => val.key === key)?.value
+    return result;
+  }
 
-  // async add(key: string, value: GenericValue): Promise<void> {
-  //   await this.init();
-  //   const newEntry: DataEntry = {
-  //     id: this.db.data.data.length + 1,
-  //     key,
-  //     value,
-  //     type: typeof value
-  //   };
-  //   this.db.data.data.push(newEntry);
-  //   await this.db.write();
-  // }
+  addEntry(key: number, value: T): void {
+    if (this.filterEntry(key) != undefined) {
+      throw new Error('Cannot insert value in database: Value alredy in');
+    }
+    this._db.data.data.push({ key, value });
+    this._db.write();
+  }
 
-  // async findByKey(key: string): Promise<DataEntry | undefined> {
-  //   await this.init();
-  //   return this.db.data.data.find(entry => entry.key === key);
-  // }
+  deleteEntry(key: number): void {
+    const result = this._db.data.data.filter((val: DataEntry<T>) => val.key !== key);
+    this._db.data.data = result;
+    this._db.write();
+  }
 
-  // async getAll(): Promise<DataEntry[]> {
-  //   await this.init();
-  //   return this.db.data.data;
-  // }
+  getAllEntries(): DataEntry<T>[] {
+    return this._db.data.data;
+  }
 }
+
+const db = new GenericDatabase<string>();
+
+
+// import { TodoItem } from "./todoItem.js";
+// import { TodoCollection } from "./todoCollection.js";
+// import { LowSync } from "lowdb";
+// import { JSONFileSync } from "lowdb/node";
+// type schemaType = {
+// tasks: { id: number; task: string; complete: boolean; }[]
+// };
+// export class JsonTodoCollection extends TodoCollection {
+// private database: LowSync<schemaType>;
+// constructor(public userName: string, todoItems: TodoItem[] = []) {
+// super(userName, []);
+// this.database = new LowSync(new JSONFileSync("Todos.json"));
+// this.database.read();
+// if (this.database.data == null) {
+// this.database.data = { tasks : todoItems};
+// this.database.write();
+// todoItems.forEach(item => this.itemMap.set(item.id, item));
+// } else {
+// this.database.data.tasks.forEach(item =>
+// this.itemMap.set(item.id,
+// new TodoItem(item.id, item.task, item.complete)));
+// }
+// }
+// addTodo(task: string): number {
+// let result = super.addTodo(task);
+// this.storeTasks();
+// return result;
+// }
+// markComplete(id: number, complete: boolean): void {
+// super.markComplete(id, complete);
+// this.storeTasks();
+// }
+// removeComplete(): void {
+// super.removeComplete();
+// this.storeTasks();
+// }
+// private storeTasks() {
+// this.database.data.tasks = [...this.itemMap.values()];
+// this.database.write();
+// }
+
+
+// import { TodoItem } from "./todoItem.js";
+// type ItemCounts = {
+// total: number,
+// incomplete: number
+// }
+// export class TodoCollection {
+// private nextId: number = 1;
+// protected itemMap = new Map<number, TodoItem>();
+// constructor(public userName: string, todoItems: TodoItem[] = []) {
+// todoItems.forEach(item => this.itemMap.set(item.id, item));
+// }
+// // ...methods omitted for brevity...
+// }
