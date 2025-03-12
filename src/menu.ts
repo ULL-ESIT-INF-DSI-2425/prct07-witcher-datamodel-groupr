@@ -1,5 +1,6 @@
 import inquirer from 'inquirer';
 import { Asset } from './assets.js';
+import { Trader, TraderTypes } from './mercaderes.js';
 
 async function addAsset() {
   const newAsset = await inquirer.prompt([
@@ -66,6 +67,53 @@ async function addAsset() {
   console.log(asset)
 }
 
+async function addMerchant() {
+  const newMerchant = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID of the asset',
+      validate(input:string){
+        if (!input || isNaN(Number(input))) {
+          return 'Please enter a valid number for the ID.';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'input',
+      name: 'name',
+      message: 'Enter the name of the Merchant'
+    },
+    {
+      type:'input',
+      name:'location',
+      message: 'Enter the location of the Merchant'
+    },
+    {
+      type:'input',
+      name: 'type',
+      message:'Enter the type of the Merchant',
+      validate(input: string) {
+        switch (input) {
+          case 'Blacksmith':
+          case 'Alchemist':
+          case 'GeneralMerchant':
+          case 'Herbalist':
+          case 'Armorer':
+            return true;
+          default:
+            return `Please enter a valid type: Blacksmith, Alchemist, GeneralMerchant, Herbalist, Armorer.`;
+        }
+      }
+    }
+
+  ])
+
+  // Añadir mercader
+  console.log(newMerchant)
+}
+
 async function mainMenu() {
   const options = await inquirer.prompt([
     {
@@ -91,7 +139,7 @@ async function mainMenu() {
       await screen //listGoods();
       break;
     case 'Add a merchant':
-      await screen //addMerchant();
+      await addMerchant();
       break;
     case 'List merchants':
       await screen//listMerchants();

@@ -3,7 +3,9 @@
 export enum TraderTypes {
   Blacksmith,
   Alchemist,
-  GeneralMerchant
+  GeneralMerchant,
+  Herbalist,
+  Armorer
 }
 
 export interface Trader {
