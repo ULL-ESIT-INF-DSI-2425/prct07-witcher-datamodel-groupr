@@ -6,5 +6,5 @@ export interface Clients {
   id: number;
   name: string;
   race: Race;
-  place: string;
+  location: string;
 }
