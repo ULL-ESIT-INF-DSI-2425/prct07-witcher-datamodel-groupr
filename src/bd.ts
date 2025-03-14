@@ -31,5 +31,5 @@ export abstract class GenericDatabase<T> {
   abstract findValues(filter: {}): T[];
   abstract filterEntry(value: T): T | undefined;
   abstract deleteEntry(filter: {}): void;
-  abstract modifyEntry(filter: {}): void;
+  abstract modifyEntry(key: number, filter: {}): void;
 }

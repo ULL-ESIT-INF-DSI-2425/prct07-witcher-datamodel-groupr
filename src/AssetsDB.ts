@@ -40,11 +40,17 @@ export class AssetsDB extends GenericDatabase<Asset> {
     crown_value?: number;
   }): void {
     const deleteData: Asset[] = this.findValues(filter);
-    this._db.data.data.filter((asset: Asset) => {deleteData.find((da: Asset) => da.id === asset.id) == undefined});
+    let result: Asset[] = [];
+    this._db.data.data.forEach((asset:Asset) => {
+      if (deleteData.find((as) => as.id == asset.id) == undefined) {
+        result.push(asset);
+      }
+    })
+    this._db.data.data = result;
+    this._db.write();
   }
 
-  modifyEntry(filter: {
-    id: number;
+  modifyEntry(id: number, filter: {
     name?: string;
     description?: string;
     material?: string;
@@ -52,7 +58,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
     crown_value?: number;
    }): void {
     this._db.data.data.forEach((asset: Asset) => {
-      if (asset.id === filter.id) {
+      if (asset.id === id) {
         if (filter.name) asset.name = filter.name;
         if (filter.description) asset.description = filter.description;
         if (filter.material) asset.material = filter.material;

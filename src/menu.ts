@@ -2,7 +2,8 @@ import inquirer from 'inquirer';
 import { Asset } from './assets.js';
 import { Trader, TraderTypes } from './mercaderes.js';
 import {AssetsDB} from "./AssetsDB.js"
-import {TradersClientsDB} from "./tradersClientsDB.js"
+import {TradersDB} from "./tradersDB.js"
+import { ClientsDB } from './clientsDB.js';
 
 async function addAsset(db: AssetsDB) {
   const newAsset = await inquirer.prompt([
@@ -69,7 +70,7 @@ async function addAsset(db: AssetsDB) {
   db.addEntry(asset)
 }
 
-async function addMerchant(db: TradersClientsDB) {
+async function addMerchant(db: TradersDB) {
   const newMerchant = await inquirer.prompt([
     {
       type: 'input',
@@ -120,7 +121,7 @@ async function addMerchant(db: TradersClientsDB) {
     id: newMerchant.id
   }
 
-  //db.addEntry(trader)
+  db.addEntry(trader)
 }
 
 
@@ -143,13 +144,13 @@ async function mainMenu() {
   // El screen es para que no de error, cuando esten los metodo se quita
   switch (options.action) {
     case 'Add a good':
-      await addAsset();
+      // await addAsset();
       break;
     case 'List goods':
       await screen //listGoods();
       break;
     case 'Add a merchant':
-      await addMerchant();
+      // await addMerchant();
       break;
     case 'List merchants':
       await screen//listMerchants();

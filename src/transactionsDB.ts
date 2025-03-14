@@ -52,11 +52,17 @@ export class TransactionsDB extends GenericDatabase<Transactions> {
     return_reason?: ReturnReasonType;
   }): void {
     const deleteData: Transactions[] = this.findValues(filter);
-    this._db.data.data.filter((tr: Transactions) => {deleteData.find((trs: Transactions) => trs.id === tr.id) == undefined});
+    let result: Transactions[] = [];
+    this._db.data.data.forEach((tr:Transactions) => {
+      if (deleteData.find((t) => t.id == tr.id) == undefined) {
+        result.push(tr);
+      }
+    })
+    this._db.data.data = result;
+    this._db.write()
   }
 
-  modifyEntry(filter: {
-    id: number
+  modifyEntry(id: number, filter: {
     type?: TransactionType;
     trID?: number;
     date?: string;
@@ -64,7 +70,7 @@ export class TransactionsDB extends GenericDatabase<Transactions> {
     return_reason?: ReturnReasonType;
    }): void {
     this._db.data.data.forEach((tr: Transactions) => {
-      if (tr.id === filter.id) {
+      if (tr.id === id) {
         if (filter.type) tr.type = filter.type;
         if (filter.trID) tr.trID = filter.trID;
         if (filter.date) tr.date = filter.date;
@@ -72,5 +78,6 @@ export class TransactionsDB extends GenericDatabase<Transactions> {
         if (filter.return_reason) tr.return_reason = filter.return_reason;
       }
     })
+    this._db.write()
   }
 }
