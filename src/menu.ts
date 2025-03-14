@@ -1,8 +1,10 @@
 import inquirer from 'inquirer';
 import { Asset } from './assets.js';
 import { Trader, TraderTypes } from './mercaderes.js';
+import {AssetsDB} from "./AssetsDB.js"
+import {TradersClientsDB} from "./tradersClientsDB.js"
 
-async function addAsset() {
+async function addAsset(db: AssetsDB) {
   const newAsset = await inquirer.prompt([
     {
       type: 'input',
@@ -64,10 +66,10 @@ async function addAsset() {
   }
 
   //Añadir bien a la db
-  console.log(asset)
+  db.addEntry(asset)
 }
 
-async function addMerchant() {
+async function addMerchant(db: TradersClientsDB) {
   const newMerchant = await inquirer.prompt([
     {
       type: 'input',
@@ -111,8 +113,16 @@ async function addMerchant() {
   ])
 
   // Añadir mercader
-  console.log(newMerchant)
+  const trader: Trader = {
+    type:newMerchant.type,
+    location: newMerchant.location,
+    name:newMerchant.name,
+    id: newMerchant.id
+  }
+
+  //db.addEntry(trader)
 }
+
 
 async function mainMenu() {
   const options = await inquirer.prompt([

@@ -24,8 +24,8 @@ export abstract class GenericDatabase<T> {
     this._db.write();
   }
 
-  getAllEntries(): void {
-    console.table(this._db.data.data);
+  getAllEntries(): T [] {
+    return this._db.data.data;
   }
 
   abstract findValues(filter: {}): T[];
