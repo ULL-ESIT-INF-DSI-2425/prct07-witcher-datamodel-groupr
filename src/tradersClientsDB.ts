@@ -1,4 +1,4 @@
-// Inventary.ts
+// tradersClientsDB.ts
 import { GenericDatabase } from "./bd.js";
 import { Trader, TraderTypes } from "./mercaderes.js";
 import { Clients, Race } from "./clients.js";
@@ -22,9 +22,12 @@ export class TradersClientsDB extends GenericDatabase<Trader & Clients> {
       return(
         (filter.id == undefined || tdcl.id === filter.id) &&
         (filter.name == undefined || tdcl.name === filter.name) &&
-        (filter.type == undefined || tdcl.type === filter.type) &&
-        (filter.location == undefined || tdcl.location === filter.location)
-      );
+        (filter.location == undefined || tdcl.location === filter.location) &&
+        (filter.type == undefined || 
+          ('type' in tdcl && tdcl.type === filter.type) ||
+          ('race' in tdcl && tdcl.race === filter.type)
+        )
+      )
     });
   }
 
@@ -47,11 +50,15 @@ export class TradersClientsDB extends GenericDatabase<Trader & Clients> {
     this._db.data.data.forEach((tdcl: Trader & Clients) => {
       if (tdcl.id === filter.id) {
         if (filter.name) tdcl.name = filter.name;
-        if (filter.type) tdcl.type = filter.type;
         if (filter.location) tdcl.location = filter.location;
+        if (filter.type) {
+          if ('type' in tdcl && filter.type in TraderTypes) {
+            tdcl.type = filter.type as TraderTypes;
+          } else if ('race' in tdcl && filter.type in Race) {
+            tdcl.race = filter.type as Race;
+          }
+        }
       }
     })
   }
-
-  // Falta corrección por unión de tipos (Linea 50)
 }
