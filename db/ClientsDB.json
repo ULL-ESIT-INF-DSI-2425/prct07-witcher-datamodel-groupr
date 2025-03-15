@@ -1,0 +1,16 @@
+{
+  "data": [
+    {
+      "name": "Juan",
+      "id": "1",
+      "location": "The mountains",
+      "race": 0
+    },
+    {
+      "name": "Franco",
+      "id": "2",
+      "location": "Valle de los caidos",
+      "race": 1
+    }
+  ]
+}

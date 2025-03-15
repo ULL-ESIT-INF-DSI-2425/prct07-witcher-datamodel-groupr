@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "type": 0,
+      "location": "The river",
+      "name": "Pedro",
+      "id": "1"
+    },
+    {
+      "type": 4,
+      "location": "Santa Cruz",
+      "name": "Barreto",
+      "id": "2"
+    },
+    {
+      "type": 0,
+      "location": "El tanque",
+      "name": "Izan",
+      "id": "3"
+    },
+    {
+      "type": 1,
+      "location": "Costanera",
+      "name": "Javiele",
+      "id": "4"
+    }
+  ]
+}
