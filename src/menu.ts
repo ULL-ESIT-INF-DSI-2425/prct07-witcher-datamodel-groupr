@@ -213,6 +213,27 @@ export async function listGoods(db: AssetsDB) {
     console.log(`   📜 Description: ${asset.description}`);
     console.log(`   ⚖️  Weight: ${asset.weigth} kg | 💰 Value: ${asset.crown_value} crowns`);
     console.log(`   🛠️  Material: ${asset.material}`);
+    let assetType: string;
+    switch (asset.type.toUpperCase()) {
+      case 'PRODUCT':
+      assetType = 'Product';
+      break;
+      case 'ARMOR':
+      assetType = 'Armor';
+      break;
+      case 'WEAPON':
+      assetType = 'Weapon';
+      break;
+      case 'POTION':
+      assetType = 'Potion';
+      break;
+      case 'BOOK':
+      assetType = 'Book';
+      break;
+      default:
+      assetType = 'Unknown';
+    }
+    console.log(`   🗡️  Type: ${assetType}`);
     console.log("-------------------------------------------");
   });
 
