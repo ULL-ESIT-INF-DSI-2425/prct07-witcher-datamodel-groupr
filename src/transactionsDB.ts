@@ -1,107 +1,103 @@
-// Inventary.ts
 import { GenericDatabase } from "./bd.js";
+import { Transactions } from "./transactions.js";
 
-export enum TransactionType { SELL, BUY, RETURN}
-
-export enum ReturnReasonType { DISSATISFACTION, DEFECTIVE }
-
-export interface Transactions {
-  id: number
-  type: TransactionType;
-  // trID: number;
-  date: string;
-  clientID: number;
-  productName: string;
-  buying: boolean
-  productID: number;
-  involver_crowns?: number;
-  // return_reason?: ReturnReasonType;
-}
-
+/**
+ * Database class for managing transactions.
+ */
 export class TransactionsDB extends GenericDatabase<Transactions> {
+  /**
+   * Initializes the TransactionsDB instance and sets the database file path.
+   */
   constructor() {
-    super('./db/TransactionsDB.json')
+    super('./db/TransactionsDB.json');
   }
 
+  /**
+   * Searches for a specific transaction in the database by its ID.
+   * @param asset - The transaction to search for.
+   * @returns The matching transaction if found, otherwise undefined.
+   */
   filterEntry(asset: Transactions): Transactions | undefined {
-    return this._db.data.data.find((a: Transactions) => a.id === asset.id)
+    return this._db.data.data.find((a: Transactions) => a.id === asset.id);
   }
 
+  /**
+   * Retrieves transactions that match the specified filter criteria.
+   * @param filter - Object containing optional filter criteria.
+   * @returns An array of transactions matching the filter.
+   */
   findValues(filter: {
-    id?: number
-    type?: TransactionType;
-    // trID?: number;
+    id?: number;
     date?: string;
-    productName?: string,
-    productID?: number,
-    buying?: boolean
+    productName?: string;
+    productID?: number;
+    buying?: boolean;
     clientID?: number;
     involver_crowns?: number;
-    // return_reason?: ReturnReasonType;
-   }): Transactions[] {
+  }): Transactions[] {
     return this._db.data.data.filter((tr: Transactions) => {
-      return(
+      return (
         (filter.id == undefined || tr.id === filter.id) &&
-        (filter.type == undefined || tr.type === filter.type) &&
-        // (filter.trID == undefined || tr.trID === filter.trID) &&
         (filter.date == undefined || tr.date === filter.date) &&
         (filter.clientID === undefined || tr.clientID === filter.clientID) &&
         (filter.involver_crowns == undefined || tr.involver_crowns === filter.involver_crowns) &&
-        // (filter.return_reason == undefined || tr.return_reason === filter.return_reason) &&
         (filter.productName == undefined || tr.productName === filter.productName) &&
         (filter.productID == undefined || tr.productID === filter.productID) &&
-        (filter.buying == undefined || tr.buying === filter.buying) 
+        (filter.buying == undefined || tr.buying === filter.buying)
       );
     });
   }
 
+  /**
+   * Deletes transactions that match the specified filter criteria.
+   * @param filter - Object containing optional filter criteria.
+   */
   deleteEntry(filter: {
-    id?: number
-    type?: TransactionType;
-    // trID?: number;
+    id?: number;
     date?: string;
-    productName?: string,
-    productID?: number,
-    buying?: boolean
+    productName?: string;
+    productID?: number;
+    buying?: boolean;
     clientID?: number;
     involver_crowns?: number;
-    // return_reason?: ReturnReasonType;
   }): void {
     const deleteData: Transactions[] = this.findValues(filter);
     let result: Transactions[] = [];
-    this._db.data.data.forEach((tr:Transactions) => {
+    this._db.data.data.forEach((tr: Transactions) => {
       if (deleteData.find((t) => t.id == tr.id) == undefined) {
         result.push(tr);
       }
-    })
+    });
     this._db.data.data = result;
-    this._db.write()
+    this._db.write();
   }
 
-  modifyEntry(id: number, filter: {
-    type?: TransactionType;
-    // trID?: number;
-    date?: string;
-    productName?: string,
-    productID?: number,
-    buying?: boolean
-    clientID?: number;
-    involver_crowns?: number;
-    // return_reason?: ReturnReasonType;
-   }): void {
+  /**
+   * Modifies an existing transaction based on the provided filter criteria.
+   * @param id - The ID of the transaction to modify.
+   * @param filter - Object containing the fields to update.
+   */
+  modifyEntry(
+    id: number,
+    filter: {
+      date?: string;
+      productName?: string;
+      productID?: number;
+      buying?: boolean;
+      clientID?: number;
+      involver_crowns?: number;
+    }
+  ): void {
     this._db.data.data.forEach((tr: Transactions) => {
       if (tr.id === id) {
-        if (filter.type) tr.type = filter.type;
-        // if (filter.trID) tr.trID = filter.trID;
         if (filter.date) tr.date = filter.date;
         if (filter.productName) tr.productName = filter.productName;
         if (filter.productID) tr.productID = filter.productID;
-        if (filter.buying) tr.buying = filter.buying;
+        if (filter.buying !== undefined) tr.buying = filter.buying;
         if (filter.clientID) tr.clientID = filter.clientID;
         if (filter.involver_crowns) tr.involver_crowns = filter.involver_crowns;
-        // if (filter.return_reason) tr.return_reason = filter.return_reason;
       }
-    })
-    this._db.write()
+    });
+    this._db.write();
   }
 }

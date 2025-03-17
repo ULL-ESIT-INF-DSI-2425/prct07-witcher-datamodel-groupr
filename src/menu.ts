@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
-import { Asset } from './assets.js';
-import { Trader, TraderTypes } from './mercaderes.js';
+import { Asset, AssetType } from './assets.js';
+import { Trader, TraderTypes } from './traders.js';
 import {AssetsDB} from "./AssetsDB.js"
 import {TradersDB} from "./tradersDB.js"
 import {ClientsDB} from './clientsDB.js';
@@ -213,25 +213,25 @@ export async function listGoods(db: AssetsDB) {
     console.log(`   📜 Description: ${asset.description}`);
     console.log(`   ⚖️  Weight: ${asset.weigth} kg | 💰 Value: ${asset.crown_value} crowns`);
     console.log(`   🛠️  Material: ${asset.material}`);
-    let assetType: string;
-    switch (asset.type.toUpperCase()) {
-      case 'PRODUCT':
-      assetType = 'Product';
+    let assetType: AssetType;
+    switch (asset.type) {
+      case AssetType.PRODUCT:
+      assetType = AssetType.PRODUCT;
       break;
-      case 'ARMOR':
-      assetType = 'Armor';
+      case AssetType.ARMOR:
+      assetType = AssetType.ARMOR;
       break;
-      case 'WEAPON':
-      assetType = 'Weapon';
+      case AssetType.WEAPON:
+      assetType = AssetType.WEAPON;
       break;
-      case 'POTION':
-      assetType = 'Potion';
+      case AssetType.POTION:
+      assetType = AssetType.POTION;
       break;
-      case 'BOOK':
-      assetType = 'Book';
+      case AssetType.BOOK:
+      assetType = AssetType.BOOK;
       break;
       default:
-      assetType = 'Unknown';
+      assetType = AssetType.UNKNOWN;
     }
     console.log(`   🗡️  Type: ${assetType}`);
     console.log("-------------------------------------------");

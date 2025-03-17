@@ -1,4 +1,5 @@
-import { AssetsDB, AssetType } from "./AssetsDB.js";
+import { AssetsDB } from "./AssetsDB.js";
+import { AssetType } from "./assets.js";
 import { InformGenerator } from "./informGenerator.js";
 import { Asset } from "./assets.js";
 
@@ -43,7 +44,7 @@ export class AssetInformGenerator extends InformGenerator {
       console.log(`Total crown value: ${totalCrownValue}`)
     }
   }
-  generateTypeInform(type: AssetType) {
+  generateTypeInform(type?: AssetType) {
     let assets: Asset[] = this.stock?.getAllEntries() as Asset[]
     console.log(`Number of assets of type ${type}: ${assets.length}`)
     let names = ''

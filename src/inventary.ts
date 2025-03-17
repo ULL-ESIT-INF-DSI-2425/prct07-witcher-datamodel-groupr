@@ -1,6 +1,8 @@
-import { TransactionsDB, Transactions } from "./transactionsDB.js";
-import { AssetsDB, AssetType } from "./AssetsDB.js";
-import {AssetInformGenerator} from './assetInformGenerator.js'
+import { TransactionsDB } from "./transactionsDB.js";
+import { Transactions } from "./transactions.js";
+import { AssetsDB } from "./AssetsDB.js";
+import { AssetType } from "./assets.js";
+import { AssetInformGenerator } from './assetInformGenerator.js'
 import { BenefitsInformGenerator } from "./benefitsInformGenerator.js";
 import { TraderInformGenerator } from "./traderInformGenerator.js";
 
@@ -33,7 +35,7 @@ export class Inventary {
         break
       case InformType.STOCKTYPE:
         const stockTypeInform = new AssetInformGenerator(this._assets)
-        stockTypeInform.generateInform(assetType)
+        stockTypeInform.generateTypeInform(assetType)
         break
       case InformType.BENEFITS:
         const benefitInform = new BenefitsInformGenerator(this._transactions)
