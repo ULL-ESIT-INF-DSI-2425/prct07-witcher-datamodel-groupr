@@ -10,6 +10,10 @@ export interface Transactions {
   type: TransactionType;
   trID: number;
   date: string;
+  clientID: number;
+  productName: string;
+  buying: boolean
+  productID: number;
   involver_crowns?: number;
   return_reason?: ReturnReasonType;
 }
@@ -28,6 +32,10 @@ export class TransactionsDB extends GenericDatabase<Transactions> {
     type?: TransactionType;
     trID?: number;
     date?: string;
+    productName?: string,
+    productID?: number,
+    buying?: boolean
+    clientID?: number;
     involver_crowns?: number;
     return_reason?: ReturnReasonType;
    }): Transactions[] {
@@ -37,6 +45,7 @@ export class TransactionsDB extends GenericDatabase<Transactions> {
         (filter.type == undefined || tr.type === filter.type) &&
         (filter.trID == undefined || tr.trID === filter.trID) &&
         (filter.date == undefined || tr.date === filter.date) &&
+        (filter.clientID === undefined || tr.clientID === filter.clientID) &&
         (filter.involver_crowns == undefined || tr.involver_crowns === filter.involver_crowns) &&
         (filter.return_reason == undefined || tr.return_reason === filter.return_reason)
       );

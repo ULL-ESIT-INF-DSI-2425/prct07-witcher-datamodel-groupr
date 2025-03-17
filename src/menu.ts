@@ -83,6 +83,27 @@ export async function addAsset(db: AssetsDB) {
       message:'Enter the material of the asset'
     },
     {
+      type: 'input',
+      name: 'type',
+      message: 'Enter the type of asset',
+      validate(input: string) {
+        switch(input.toUpperCase()) {
+          case 'PRODUCT':
+            return true
+          case 'ARMOR':
+            return true
+          case 'WEAPON':
+            return true
+          case 'POTION':
+            return true
+          case 'BOOK':
+            return true
+          default:
+            return 'Introduce a correct type of asset'
+        }
+      }
+    },
+    {
       type:'input',
       name:'weight',
       message: 'Enter the weight of the asset',
@@ -112,7 +133,8 @@ export async function addAsset(db: AssetsDB) {
     description: newAsset.description,
     material: newAsset.material,
     weigth: newAsset.weight,
-    crown_value : newAsset.crown_value
+    crown_value : newAsset.crown_value,
+    type: newAsset.type
   }
 
   //Añadir bien a la db

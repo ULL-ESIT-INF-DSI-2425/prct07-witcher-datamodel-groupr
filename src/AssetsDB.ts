@@ -2,6 +2,8 @@
 import { GenericDatabase } from "./bd.js";
 import { Asset } from "./assets.js";
 
+export enum AssetType {PRODUCT, ARMOR, WEAPON, POTION, BOOK}
+
 export class AssetsDB extends GenericDatabase<Asset> {
   constructor() {
     super('./db/AssetsDB.json')

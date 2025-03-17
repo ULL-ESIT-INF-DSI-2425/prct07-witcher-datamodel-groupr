@@ -27,7 +27,7 @@
     "vitest": "^3.0.5"
   },
   "dependencies": {
-    "inquirer": "^12.4.3",
+    "inquirer": "^12.5.0",
     "lowdb": "^7.0.1"
   }
 }

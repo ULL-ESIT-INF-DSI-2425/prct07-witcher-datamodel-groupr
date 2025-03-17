@@ -7,4 +7,5 @@ export interface Asset {
   material: string;
   weigth: number;
   crown_value: number;
+  type: string;
 }

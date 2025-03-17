@@ -1,7 +1,10 @@
 import { TransactionsDB, Transactions } from "./transactionsDB.js";
-import { AssetsDB } from "./AssetsDB.js";
+import { AssetsDB, AssetType } from "./AssetsDB.js";
+import {AssetInformGenerator} from './assetInformGenerator.js'
+import { BenefitsInformGenerator } from "./benefitsInformGenerator.js";
+import { TraderInformGenerator } from "./traderInformGenerator.js";
 
-export enum InformType { STOCKSTATE, MOSTSELL, MOSTDEMANDED, TRADERSINCOME, CLIENTSBILLS, HISTROYTRADER, HISTORYCLIENT}
+export enum InformType { STOCKSTATE, STOCKTYPE, BENEFITS, TRADERHISTORY}
 
 export class Inventary {
   private _assets: AssetsDB;
@@ -17,10 +20,32 @@ export class Inventary {
   }
 
   registerTransaction(tr: Transactions ): void {
-    
+    console.log('Adding a new transaction...')
+    this._transactions.addEntry(tr)
+    console.log('Registered succesfully')
   }
 
-  generateInform(informt: InformType) {
-    // Creo que esto hay que transformarlo en una clase que genera informes
+  generateInform(informt: InformType, id?: number, assetType?: AssetType) {
+    switch(informt) {
+      case InformType.STOCKSTATE:
+        const stockInform = new AssetInformGenerator(this._assets)
+        stockInform.generateInform(id)
+        break
+      case InformType.STOCKTYPE:
+        const stockTypeInform = new AssetInformGenerator(this._assets)
+        stockTypeInform.generateInform(assetType)
+        break
+      case InformType.BENEFITS:
+        const benefitInform = new BenefitsInformGenerator(this._transactions)
+        benefitInform.generateInform()
+        break
+      case InformType.TRADERHISTORY:
+        const traderInform = new TraderInformGenerator(this._transactions)
+        traderInform.generateInform(id)
+        break 
+      default:
+        console.log('Choose a correct inform type (STOCKSTATE, STOCKTYPE, BENEFITS, TRADERHISTORY')
+    }
+    return
   }
 }
