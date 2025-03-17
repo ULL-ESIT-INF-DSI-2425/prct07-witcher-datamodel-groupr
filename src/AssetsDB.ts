@@ -20,6 +20,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
     material?: string;
     weigth?: number;
     crown_value?: number;
+    type?: string;
    }): Asset[] {
     return this._db.data.data.filter((asset: Asset) => {
       return(
@@ -28,7 +29,8 @@ export class AssetsDB extends GenericDatabase<Asset> {
         (filter.description == undefined || asset.description === filter.description) &&
         (filter.material == undefined || asset.material === filter.material) &&
         (filter.crown_value == undefined || asset.crown_value === filter.crown_value) &&
-        (filter.weigth == undefined || asset.weigth === filter.weigth)
+        (filter.weigth == undefined || asset.weigth === filter.weigth) &&
+        (filter.type == undefined || asset.type === filter.type)
       );
     });
   }
@@ -40,6 +42,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
     material?: string;
     weigth?: number;
     crown_value?: number;
+    type?: string;
   }): void {
     const deleteData: Asset[] = this.findValues(filter);
     let result: Asset[] = [];
@@ -58,6 +61,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
     material?: string;
     weigth?: number;
     crown_value?: number;
+    type?: string;
    }): void {
     this._db.data.data.forEach((asset: Asset) => {
       if (asset.id === id) {
@@ -66,6 +70,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
         if (filter.material) asset.material = filter.material;
         if (filter.weigth) asset.weigth = filter.weigth;
         if (filter.crown_value) asset.crown_value = filter.crown_value;
+        if (filter.type) asset.type = filter.type;
       }
     })
   }

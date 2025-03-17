@@ -8,14 +8,14 @@ export enum ReturnReasonType { DISSATISFACTION, DEFECTIVE }
 export interface Transactions {
   id: number
   type: TransactionType;
-  trID: number;
+  // trID: number;
   date: string;
   clientID: number;
   productName: string;
   buying: boolean
   productID: number;
   involver_crowns?: number;
-  return_reason?: ReturnReasonType;
+  // return_reason?: ReturnReasonType;
 }
 
 export class TransactionsDB extends GenericDatabase<Transactions> {
@@ -30,24 +30,27 @@ export class TransactionsDB extends GenericDatabase<Transactions> {
   findValues(filter: {
     id?: number
     type?: TransactionType;
-    trID?: number;
+    // trID?: number;
     date?: string;
     productName?: string,
     productID?: number,
     buying?: boolean
     clientID?: number;
     involver_crowns?: number;
-    return_reason?: ReturnReasonType;
+    // return_reason?: ReturnReasonType;
    }): Transactions[] {
     return this._db.data.data.filter((tr: Transactions) => {
       return(
         (filter.id == undefined || tr.id === filter.id) &&
         (filter.type == undefined || tr.type === filter.type) &&
-        (filter.trID == undefined || tr.trID === filter.trID) &&
+        // (filter.trID == undefined || tr.trID === filter.trID) &&
         (filter.date == undefined || tr.date === filter.date) &&
         (filter.clientID === undefined || tr.clientID === filter.clientID) &&
         (filter.involver_crowns == undefined || tr.involver_crowns === filter.involver_crowns) &&
-        (filter.return_reason == undefined || tr.return_reason === filter.return_reason)
+        // (filter.return_reason == undefined || tr.return_reason === filter.return_reason) &&
+        (filter.productName == undefined || tr.productName === filter.productName) &&
+        (filter.productID == undefined || tr.productID === filter.productID) &&
+        (filter.buying == undefined || tr.buying === filter.buying) 
       );
     });
   }
@@ -55,10 +58,14 @@ export class TransactionsDB extends GenericDatabase<Transactions> {
   deleteEntry(filter: {
     id?: number
     type?: TransactionType;
-    trID?: number;
+    // trID?: number;
     date?: string;
+    productName?: string,
+    productID?: number,
+    buying?: boolean
+    clientID?: number;
     involver_crowns?: number;
-    return_reason?: ReturnReasonType;
+    // return_reason?: ReturnReasonType;
   }): void {
     const deleteData: Transactions[] = this.findValues(filter);
     let result: Transactions[] = [];
@@ -73,18 +80,26 @@ export class TransactionsDB extends GenericDatabase<Transactions> {
 
   modifyEntry(id: number, filter: {
     type?: TransactionType;
-    trID?: number;
+    // trID?: number;
     date?: string;
+    productName?: string,
+    productID?: number,
+    buying?: boolean
+    clientID?: number;
     involver_crowns?: number;
-    return_reason?: ReturnReasonType;
+    // return_reason?: ReturnReasonType;
    }): void {
     this._db.data.data.forEach((tr: Transactions) => {
       if (tr.id === id) {
         if (filter.type) tr.type = filter.type;
-        if (filter.trID) tr.trID = filter.trID;
+        // if (filter.trID) tr.trID = filter.trID;
         if (filter.date) tr.date = filter.date;
+        if (filter.productName) tr.productName = filter.productName;
+        if (filter.productID) tr.productID = filter.productID;
+        if (filter.buying) tr.buying = filter.buying;
+        if (filter.clientID) tr.clientID = filter.clientID;
         if (filter.involver_crowns) tr.involver_crowns = filter.involver_crowns;
-        if (filter.return_reason) tr.return_reason = filter.return_reason;
+        // if (filter.return_reason) tr.return_reason = filter.return_reason;
       }
     })
     this._db.write()
