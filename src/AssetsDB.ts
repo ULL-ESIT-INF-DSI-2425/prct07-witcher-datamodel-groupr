@@ -1,4 +1,4 @@
-import { GenericDatabase } from "./bd.js";
+import { GenericDatabase } from "./genericDatabase.js";
 import { Asset, AssetType } from "./assets.js";
 
 /**
