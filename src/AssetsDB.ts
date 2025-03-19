@@ -97,4 +97,34 @@ export class AssetsDB extends GenericDatabase<Asset> {
       }
     });
   }
+
+  /**
+   * Function to get all assets in the database ordered by name.
+   * @param order - ASC or DESC depending on the order of the sorting.
+   * @returns - The array of assets sorted by name.
+   */
+  getAssetsByName(order: 'ASC' | 'DESC' = 'ASC'): Asset[] {
+    return this._db.data.data.sort((a: Asset, b: Asset) => {
+      if (order === 'ASC') {
+        return a.name.localeCompare(b.name);
+      } else {
+        return b.name.localeCompare(a.name);
+      }
+    });
+  }
+
+  /**
+   * Function to get all assets in the database ordered by crown_value.
+   * @param order - ASC or DESC depending on the order of the sorting.
+   * @returns - The array of assets sorted by crown_value.
+   */
+  getAssetsByCrownValue(order: 'ASC' | 'DESC' = 'ASC'): Asset[] {
+    return this._db.data.data.sort((a: Asset, b: Asset) => {
+      if (order === 'ASC') {
+        return a.crown_value - b.crown_value;
+      } else {
+        return b.crown_value - a.crown_value;
+      }
+    });
+  }
 }

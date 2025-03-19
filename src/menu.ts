@@ -284,7 +284,44 @@ export async function addTrader(db: TradersDB) {
 
 
 export async function listGoods(db: AssetsDB) {
-  const assets: Asset[] = db.getAllEntries();
+  const input = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'filter',
+      message: 'Do you want to order the list of goods by any criteria?',
+      choices: [
+        'NONE',
+        'NAME',
+        'CROWN VALUE'
+      ]
+    },
+    {
+      type: 'list',
+      name: 'order',
+      message: 'Do you want to order the list of goods in ascending or descending order? (if applicable)',
+      when: (answers) => answers.filter !== 'NONE',
+      choices: [
+        'ASC',
+        'DESC'
+      ]
+    }
+  ]);
+
+  let assets: Asset[] = [];
+
+  if (input.filter === 'NONE') {
+    assets = db.getAllEntries();
+  }
+  else {
+    switch (input.filter) {
+      case 'NAME':
+        assets = db.getAssetsByName(input.order);
+        break;
+      case 'CROWN VALUE':
+        assets = db.getAssetsByCrownValue(input.order);
+        break;
+    }
+  }
 
   if (assets.length === 0) {
     console.log("\n🔴 No assets registered in the inventory.\n");
