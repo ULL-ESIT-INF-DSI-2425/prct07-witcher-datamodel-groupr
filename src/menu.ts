@@ -7,7 +7,7 @@ import {ClientsDB} from './clientsDB.js';
 import { Clients, Race } from './clients.js';
 //import { TransactionsDB } from './transactionsDB.js'; // Assuming you have a database class for transactions
 import { Transactions } from './transactions.js';
-import { Inventary } from './inventary.js';
+import { Inventary, InformType } from './inventary.js';
 
 export async function addTransaction(inv: Inventary) {
   const newTransaction = await inquirer.prompt([
@@ -534,7 +534,7 @@ export async function deleteClients(db: ClientsDB) {
   db.deleteEntry(filter);
 }
 
-export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clientsDB: ClientsDB, inventary:Inventary) {
+export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clientsDB: ClientsDB, inventary: Inventary) {
   const options = await inquirer.prompt([
     {
       type: 'list',
@@ -551,6 +551,7 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
         'List traders',
         'Delete traders',
         'Add Transaction',
+        'Generate Inform',
         'Exit'
       ]
     }
@@ -582,17 +583,65 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
       listClients(clientsDB);
       break;
     case 'Delete clients':
-      listClients(clientsDB);
+      deleteClients(clientsDB);
       break;
-
     case 'Add Transaction':
-      addTransaction(inventary)
+      addTransaction(inventary);
+      break;
+    case 'Generate Inform':
+      await generateInformMenu(inventary);
       break;
     case 'Exit':
       console.log('Exiting...');
       return;
   }
   await mainMenu(assetsDB, tradersDB, clientsDB, inventary);
+}
+
+async function generateInformMenu(inventary: Inventary) {
+  const informOptions = await inquirer.prompt([
+    {
+      type: 'list',
+      name: 'informType',
+      message: 'What type of inform do you want to generate?',
+      choices: [
+        'STOCKSTATE',
+        'STOCKTYPE',
+        'BENEFITS',
+        'TRADERHISTORY'
+      ]
+    },
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID (if applicable, leave empty otherwise):',
+      when: (answers) => ['STOCKSTATE', 'TRADERHISTORY'].includes(answers.informType),
+      validate(input: string) {
+        if (input && isNaN(Number(input))) {
+          return 'Please enter a valid number for the ID.';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'input',
+      name: 'assetType',
+      message: 'Enter the asset type (if applicable, leave empty otherwise):',
+      when: (answers) => answers.informType === 'STOCKTYPE',
+      validate(input: string) {
+        if (input && !Object.values(AssetType).includes(input as AssetType)) {
+          return 'Please enter a valid asset type.';
+        }
+        return true;
+      }
+    }
+  ]);
+
+  const informType = informOptions.informType as InformType;
+  const id = informOptions.id ? Number(informOptions.id) : undefined;
+  const assetType = informOptions.assetType ? (informOptions.assetType as AssetType) : undefined;
+
+  inventary.generateInform(informType, id, assetType);
 }
 
 // Simulated databases in memory

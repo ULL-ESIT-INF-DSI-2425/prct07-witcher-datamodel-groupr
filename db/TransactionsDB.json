@@ -1,3 +1,13 @@
 {
-  "data": []
+  "data": [
+    {
+      "id": 1,
+      "date": "2024-03-19",
+      "clientID": 2,
+      "productID": 3,
+      "productName": "Sword",
+      "buying": true,
+      "involver_crowns": 100
+    }
+  ]
 }

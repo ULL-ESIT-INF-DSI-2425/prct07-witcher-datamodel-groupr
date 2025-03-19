@@ -1,3 +1,13 @@
 {
-  "data": []
+  "data": [
+    {
+      "id": 1,
+      "name": "Dragon's sword",
+      "description": "Last skin of the dragon",
+      "material": "Dragon skin",
+      "weight": "20",
+      "crown_value": "1000",
+      "type": "Weapon"
+    }
+  ]
 }

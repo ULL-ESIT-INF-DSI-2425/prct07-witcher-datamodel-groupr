@@ -1,3 +1,10 @@
 {
-  "data": []
+  "data": [
+    {
+      "name": "John",
+      "id": "1",
+      "location": "Town",
+      "race": 0
+    }
+  ]
 }
