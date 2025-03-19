@@ -534,6 +534,132 @@ export async function deleteClients(db: ClientsDB) {
   db.deleteEntry(filter);
 }
 
+export async function modifyGoods(db: AssetsDB) {
+  const modifyAssetsFilter = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID of the asset - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'name',
+      message: 'Enter the name of the asset - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name:'description',
+      message: 'Enter description of the asset - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name:'material',
+      message:'Enter the material of the asset - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name: 'type',
+      message: 'Enter the type of asset - Empty for ignore',
+    },
+    {
+      type:'input',
+      name:'weight',
+      message: 'Enter the weight of the asset - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'crown_value',
+      message:'Enter the crown value of the asset - Empty for ignore',
+    }
+  ])
+
+  const filter = {
+    name: modifyAssetsFilter.name === "" ? undefined : modifyAssetsFilter.name,
+    description: modifyAssetsFilter.description === "" ? undefined : modifyAssetsFilter.description,
+    material: modifyAssetsFilter.material === "" ? undefined : modifyAssetsFilter.material,
+    type: modifyAssetsFilter.type === "" ? undefined : (Object.values(AssetType).includes(modifyAssetsFilter.type as AssetType) ? (modifyAssetsFilter.type as AssetType) : undefined),
+    weight: modifyAssetsFilter.weight === "" ? undefined : Number(modifyAssetsFilter.weight),
+    crown_value: modifyAssetsFilter.crown_value === "" ? undefined : Number(modifyAssetsFilter.crown_value)
+  }
+  db.modifyEntry(Number(modifyAssetsFilter.id), filter);
+}
+
+export async function modifyTraders(db: TradersDB) {
+  const modifyTradersFilter = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID of the trader - Its mandatory',
+      validate(input: string) {
+        if (!input || isNaN(Number(input))) {
+          return 'Please enter a valid number for the ID.';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'input',
+      name:'name',
+      message: 'Enter the name of the trader - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name: 'type',
+      message: 'Enter the type of the trader - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'location',
+      message:'Enter the location of the trader - Empty for ignore',
+    }
+  ])
+
+  const filter = {
+    name: modifyTradersFilter.name === "" ? undefined : modifyTradersFilter.name,
+    type: modifyTradersFilter.type === "" ? undefined : (Object.values(TraderTypes).includes(modifyTradersFilter.type as TraderTypes) ? (modifyTradersFilter.type as TraderTypes) : undefined),
+    weight: modifyTradersFilter.location === "" ? undefined : modifyTradersFilter.location
+  }
+  db.modifyEntry(Number(modifyTradersFilter.id),filter);
+}
+
+export async function modifyClients(db: ClientsDB) {
+  const modifyClientsFilter = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID of the client (it is mandatory)',
+      validate(input: string) {
+        if (!input || isNaN(Number(input))) {
+          return 'Please enter a valid number for the ID.';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'input',
+      name:'name',
+      message: 'Enter the name of the client - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name: 'race',
+      message: 'Enter the race of the client - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'location',
+      message:'Enter the location of the client - Empty for ignore',
+    }
+  ])
+
+  const filter = {
+    name: modifyClientsFilter.name === "" ? undefined : modifyClientsFilter.name,
+    type: modifyClientsFilter.race === "" ? undefined : (Object.values(Race).includes(modifyClientsFilter.race as Race) ? (modifyClientsFilter.race as Race) : undefined),
+    weight: modifyClientsFilter.location === "" ? undefined : modifyClientsFilter.location
+  }
+  db.modifyEntry(Number(modifyClientsFilter.id), filter);
+}
+
 export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clientsDB: ClientsDB, inventary: Inventary) {
   const options = await inquirer.prompt([
     {
@@ -567,6 +693,9 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
     case 'Delete goods':
       await deleteGoods(assetsDB);
       break;
+    case 'Modify goods':
+      await modifyGoods(assetsDB);
+      break;
     case 'Add a trader':
       await addTrader(tradersDB);
       break;
@@ -576,17 +705,23 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
     case 'Delete traders':
       await deleteTraders(tradersDB);
       break;
+    case 'Modify traders':
+      await modifyTraders(tradersDB);
+      break;
     case 'Add a client':
       await addClient(clientsDB);
       break;
     case 'List clients':
-      listClients(clientsDB);
+      await listClients(clientsDB);
       break;
     case 'Delete clients':
-      deleteClients(clientsDB);
+      await deleteClients(clientsDB);
+      break;
+    case 'Modify clients':
+      await modifyClients(clientsDB);
       break;
     case 'Add Transaction':
-      addTransaction(inventary);
+      await addTransaction(inventary);
       break;
     case 'Generate Inform':
       await generateInformMenu(inventary);
