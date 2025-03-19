@@ -5,6 +5,93 @@ import {AssetsDB} from "./AssetsDB.js"
 import {TradersDB} from "./tradersDB.js"
 import {ClientsDB} from './clientsDB.js';
 import { Clients, Race } from './clients.js';
+//import { TransactionsDB } from './transactionsDB.js'; // Assuming you have a database class for transactions
+import { Transactions } from './transactions.js';
+import { Inventary } from './inventary.js';
+
+export async function addTransaction(inv: Inventary) {
+  const newTransaction = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID of the transaction',
+      validate(input: string) {
+        if (!input || isNaN(Number(input))) {
+          return 'Please enter a valid number for the ID.';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'input',
+      name: 'date',
+      message: 'Enter the date of the transaction (YYYY-MM-DD)',
+      validate(input: string) {
+        const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+        if (!dateRegex.test(input)) {
+          return 'Please enter a valid date in the format YYYY-MM-DD.';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'input',
+      name: 'clientID',
+      message: 'Enter the ID of the client involved in the transaction',
+      validate(input: string) {
+        if (!input || isNaN(Number(input))) {
+          return 'Please enter a valid number for the client ID.';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'input',
+      name: 'productID',
+      message: 'Enter the ID of the product involved in the transaction',
+      validate(input: string) {
+        if (!input || isNaN(Number(input))) {
+          return 'Please enter a valid number for the product ID.';
+        }
+        return true;
+      }
+    },
+    {
+      type: 'input',
+      name: 'productName',
+      message: 'Enter the name of the product involved in the transaction'
+    },
+    {
+      type: 'confirm',
+      name: 'buying',
+      message: 'Is this a purchase transaction? (yes for purchase, no for sale)'
+    },
+    {
+      type: 'input',
+      name: 'involver_crowns',
+      message: 'Enter the crowns involved in the transaction (optional)',
+      validate(input: string) {
+        if (input && isNaN(Number(input))) {
+          return 'Please enter a valid number for the crowns.';
+        }
+        return true;
+      }
+    }
+  ]);
+
+  const transaction: Transactions = {
+    id: Number(newTransaction.id),
+    date: newTransaction.date,
+    clientID: Number(newTransaction.clientID),
+    productID: Number(newTransaction.productID),
+    productName: newTransaction.productName,
+    buying: newTransaction.buying,
+    involver_crowns: newTransaction.involver_crowns ? Number(newTransaction.involver_crowns) : undefined
+  };
+
+  inv.registerTransaction(transaction)
+  console.log('\n✅ Transaction added successfully!\n');
+}
 
 export async function addClient (db: ClientsDB) {
   const newClient = await inquirer.prompt([
@@ -447,7 +534,7 @@ export async function deleteClients(db: ClientsDB) {
   db.deleteEntry(filter);
 }
 
-export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clientsDB: ClientsDB) {
+export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clientsDB: ClientsDB, inventary:Inventary) {
   const options = await inquirer.prompt([
     {
       type: 'list',
@@ -463,6 +550,7 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
         'Delete clients',
         'List traders',
         'Delete traders',
+        'Add Transaction',
         'Exit'
       ]
     }
@@ -496,18 +584,23 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
     case 'Delete clients':
       listClients(clientsDB);
       break;
+
+    case 'Add Transaction':
+      addTransaction(inventary)
+      break;
     case 'Exit':
       console.log('Exiting...');
       return;
   }
-  await mainMenu(assetsDB, tradersDB, clientsDB);
+  await mainMenu(assetsDB, tradersDB, clientsDB, inventary);
 }
 
 // Simulated databases in memory
 const assetsDB = new AssetsDB();
 const tradersDB = new TradersDB();
 const clientsDB = new ClientsDB();
+const inventary = new Inventary();
 
 // Start the menu
-mainMenu(assetsDB, tradersDB, clientsDB);
+mainMenu(assetsDB, tradersDB, clientsDB, inventary);
 
