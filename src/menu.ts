@@ -132,7 +132,7 @@ export async function addAsset(db: AssetsDB) {
     name: newAsset.name,
     description: newAsset.description,
     material: newAsset.material,
-    weigth: newAsset.weight,
+    weight: newAsset.weight,
     crown_value : newAsset.crown_value,
     type: newAsset.type
   }
@@ -211,7 +211,7 @@ export async function listGoods(db: AssetsDB) {
   assets.forEach(asset => {
     console.log(`🔹 *${asset.name}* (ID: ${asset.id})`);
     console.log(`   📜 Description: ${asset.description}`);
-    console.log(`   ⚖️  Weight: ${asset.weigth} kg | 💰 Value: ${asset.crown_value} crowns`);
+    console.log(`   ⚖️  Weight: ${asset.weight} kg | 💰 Value: ${asset.crown_value} crowns`);
     console.log(`   🛠️  Material: ${asset.material}`);
     let assetType: AssetType;
     switch (asset.type) {
@@ -330,6 +330,123 @@ export async function listClients(db: ClientsDB) {
   console.log("\n🏹 End of the list.\n");
 }
 
+export async function deleteGoods(db: AssetsDB) {
+  const deleteAssetsFilter = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID of the asset - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'name',
+      message: 'Enter the name of the asset - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name:'description',
+      message: 'Enter description of the asset - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name:'material',
+      message:'Enter the material of the asset - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name: 'type',
+      message: 'Enter the type of asset - Empty for ignore',
+    },
+    {
+      type:'input',
+      name:'weight',
+      message: 'Enter the weight of the asset - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'crown_value',
+      message:'Enter the crown value of the asset - Empty for ignore',
+    }
+  ])
+
+  const filter = {
+    id: deleteAssetsFilter.id === "" ? undefined : Number(deleteAssetsFilter.id),
+    name: deleteAssetsFilter.name === "" ? undefined : deleteAssetsFilter.name,
+    description: deleteAssetsFilter.description === "" ? undefined : deleteAssetsFilter.description,
+    material: deleteAssetsFilter.material === "" ? undefined : deleteAssetsFilter.material,
+    type: deleteAssetsFilter.type === "" ? undefined : (Object.values(AssetType).includes(deleteAssetsFilter.type as AssetType) ? (deleteAssetsFilter.type as AssetType) : undefined),
+    weight: deleteAssetsFilter.weight === "" ? undefined : Number(deleteAssetsFilter.weight),
+    crown_value: deleteAssetsFilter.crown_value === "" ? undefined : Number(deleteAssetsFilter.crown_value)
+  }
+  db.deleteEntry(filter);
+}
+
+export async function deleteTraders(db: TradersDB) {
+  const deleteTradersFilter = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID of the trader - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'name',
+      message: 'Enter the name of the trader - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name: 'type',
+      message: 'Enter the type of the trader - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'location',
+      message:'Enter the location of the trader - Empty for ignore',
+    }
+  ])
+
+  const filter = {
+    id: deleteTradersFilter.id === "" ? undefined : Number(deleteTradersFilter.id),
+    name: deleteTradersFilter.name === "" ? undefined : deleteTradersFilter.name,
+    type: deleteTradersFilter.type === "" ? undefined : (Object.values(TraderTypes).includes(deleteTradersFilter.type as TraderTypes) ? (deleteTradersFilter.type as TraderTypes) : undefined),
+    weight: deleteTradersFilter.location === "" ? undefined : deleteTradersFilter.location
+  }
+  db.deleteEntry(filter);
+}
+
+export async function deleteClients(db: ClientsDB) {
+  const deleteClientsFilter = await inquirer.prompt([
+    {
+      type: 'input',
+      name: 'id',
+      message: 'Enter the ID of the client - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'name',
+      message: 'Enter the name of the client - Empty for ignore'
+    },
+    {
+      type: 'input',
+      name: 'race',
+      message: 'Enter the race of the client - Empty for ignore',
+    },
+    {
+      type: 'input',
+      name:'location',
+      message:'Enter the location of the client - Empty for ignore',
+    }
+  ])
+
+  const filter = {
+    id: deleteClientsFilter.id === "" ? undefined : Number(deleteClientsFilter.id),
+    name: deleteClientsFilter.name === "" ? undefined : deleteClientsFilter.name,
+    type: deleteClientsFilter.race === "" ? undefined : (Object.values(Race).includes(deleteClientsFilter.race as Race) ? (deleteClientsFilter.race as Race) : undefined),
+    weight: deleteClientsFilter.location === "" ? undefined : deleteClientsFilter.location
+  }
+  db.deleteEntry(filter);
+}
+
 export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clientsDB: ClientsDB) {
   const options = await inquirer.prompt([
     {
@@ -339,10 +456,13 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
       choices: [
         'Add a good',
         'List goods',
+        'Delete goods',
         'Add a trader',
         'Add a client',
         'List clients',
+        'Delete clients',
         'List traders',
+        'Delete traders',
         'Exit'
       ]
     }
@@ -355,16 +475,25 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
     case 'List goods':
       await listGoods(assetsDB);
       break;
+    case 'Delete goods':
+      await deleteGoods(assetsDB);
+      break;
     case 'Add a trader':
       await addTrader(tradersDB);
       break;
     case 'List traders':
       await listTraders(tradersDB);
       break;
+    case 'Delete traders':
+      await deleteTraders(tradersDB);
+      break;
     case 'Add a client':
       await addClient(clientsDB);
       break;
     case 'List clients':
+      listClients(clientsDB);
+      break;
+    case 'Delete clients':
       listClients(clientsDB);
       break;
     case 'Exit':

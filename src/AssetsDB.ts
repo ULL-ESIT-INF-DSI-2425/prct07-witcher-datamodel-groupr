@@ -32,7 +32,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
     name?: string;
     description?: string;
     material?: string;
-    weigth?: number;
+    weight?: number;
     crown_value?: number;
     type?: AssetType;
   }): Asset[] {
@@ -43,7 +43,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
         (filter.description == undefined || asset.description === filter.description) &&
         (filter.material == undefined || asset.material === filter.material) &&
         (filter.crown_value == undefined || asset.crown_value === filter.crown_value) &&
-        (filter.weigth == undefined || asset.weigth === filter.weigth) &&
+        (filter.weight == undefined || asset.weight === filter.weight) &&
         (filter.type == undefined || asset.type === filter.type)
       );
     });
@@ -58,7 +58,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
     name?: string;
     description?: string;
     material?: string;
-    weigth?: number;
+    weight?: number;
     crown_value?: number;
     type?: AssetType;
   }): void {
@@ -82,7 +82,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
     name?: string;
     description?: string;
     material?: string;
-    weigth?: number;
+    weight?: number;
     crown_value?: number;
     type?: AssetType;
   }): void {
@@ -91,7 +91,7 @@ export class AssetsDB extends GenericDatabase<Asset> {
         if (filter.name) asset.name = filter.name;
         if (filter.description) asset.description = filter.description;
         if (filter.material) asset.material = filter.material;
-        if (filter.weigth) asset.weigth = filter.weigth;
+        if (filter.weight) asset.weight = filter.weight;
         if (filter.crown_value) asset.crown_value = filter.crown_value;
         if (filter.type) asset.type = filter.type;
       }

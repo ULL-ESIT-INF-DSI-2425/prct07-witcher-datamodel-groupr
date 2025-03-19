@@ -43,7 +43,7 @@ export interface Asset {
   /**
    * Weight of the asset.
    */
-  weigth: number;
+  weight: number;
 
   /**
    * Monetary value of the asset in crowns.

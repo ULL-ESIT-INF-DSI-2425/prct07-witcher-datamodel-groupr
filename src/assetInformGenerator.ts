@@ -20,7 +20,7 @@ export class AssetInformGenerator extends InformGenerator {
       console.log(`Name: ${asset[0].name}`)
       console.log(`Description o the asset: ${asset[0].description}`)
       console.log(`Material: ${asset[0].material}`)
-      console.log(`Weigth: ${asset[0].weigth}`)
+      console.log(`weight: ${asset[0].weight}`)
       console.log(`Crown value: ${asset[0].crown_value}`)
     }
     else if (id != undefined) {
