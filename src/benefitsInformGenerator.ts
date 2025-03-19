@@ -24,8 +24,10 @@ export class BenefitsInformGenerator extends InformGenerator {
         benefits += transaction.involver_crowns
       }
     })
+    console.log(`-------------------Showing information of benefits --------------------------------------`)
     console.log(`Benefits: ${benefits} crowns`)
     console.log(`Losts: ${losts} crowns`)
     console.log(`Total balance: ${benefits - losts}`)
+    console.log('---------------------------------------------------------------------------------------------')
   }
 }

@@ -28,6 +28,7 @@ export class Inventary {
   }
 
   generateInform(informt: InformType, id?: number, assetType?: AssetType) {
+    
     switch(informt) {
       case InformType.STOCKSTATE:
         const stockInform = new AssetInformGenerator(this._assets)

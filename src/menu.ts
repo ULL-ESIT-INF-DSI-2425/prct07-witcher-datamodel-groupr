@@ -637,10 +637,9 @@ async function generateInformMenu(inventary: Inventary) {
     }
   ]);
 
-  const informType = informOptions.informType as InformType;
+  const informType = InformType[informOptions.informType as keyof typeof InformType];
   const id = informOptions.id ? Number(informOptions.id) : undefined;
   const assetType = informOptions.assetType ? (informOptions.assetType as AssetType) : undefined;
-
   inventary.generateInform(informType, id, assetType);
 }
 

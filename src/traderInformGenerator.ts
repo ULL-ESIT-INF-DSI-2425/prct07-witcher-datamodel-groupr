@@ -14,13 +14,18 @@ export class TraderInformGenerator extends InformGenerator {
       clientID: id
     }
     let transactions = this.transactions?.findValues(clientIDValue)
+    if (transactions?.length === 0) {
+      console.log(`The trader with id ${id} is not registered`)
+      return
+    }
+    console.log(`-------------------Showing information of trader ${id} --------------------------------------`)
     console.log(`Number of transactions: ${transactions?.length}`)
     let IDs = ''
     transactions?.forEach(transaction => {
       IDs += `${transaction.id}, `
     })
-    transactions = transactions?.slice(0, -2)
-    console.log(`IDs of '${id} trnasactions: ${transactions}`)
+    IDs = IDs.slice(0, -2)
+    console.log(`IDs of the trader trnasactions: ${IDs}`)
     let boughProducts = ''
     transactions?.forEach(transaction => {
       if (!transaction.buying) {
@@ -32,10 +37,11 @@ export class TraderInformGenerator extends InformGenerator {
     let soldProducts = ''
     transactions?.forEach(transaction => {
       if (transaction.buying) {
-        soldProducts += `${transaction.productName}`
+        soldProducts += `${transaction.productName}, `
       }
     })
     soldProducts = soldProducts.slice(0, -2)
     console.log(`List of sold products: ${soldProducts}`)
+    console.log('---------------------------------------------------------------------------------------------')
   }
 }

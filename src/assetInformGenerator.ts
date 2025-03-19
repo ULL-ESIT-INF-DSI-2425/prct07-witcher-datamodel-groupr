@@ -14,19 +14,22 @@ export class AssetInformGenerator extends InformGenerator {
     }
     let asset: Asset[] | undefined = this.stock?.findValues(idObject)
     if (id != undefined && this.stock?.findValues(idObject).length != 0 && asset != undefined) {
+      console.log(`-------------------Showing information of asset(${id})--------------------------------------`)
       console.log(`This asset its currently available (amount: ${asset.length})`)
       console.log('Information of the asset: ')
-      console.log(`Id: ${asset[0].id}}`)
+      console.log(`Id: ${asset[0].id}`)
       console.log(`Name: ${asset[0].name}`)
       console.log(`Description o the asset: ${asset[0].description}`)
       console.log(`Material: ${asset[0].material}`)
       console.log(`weight: ${asset[0].weight}`)
       console.log(`Crown value: ${asset[0].crown_value}`)
+      console.log('---------------------------------------------------------------------------------------------')
     }
     else if (id != undefined) {
       console.log(`The asset with ID '${id} is not available`)
     }
     else {
+      console.log('-------------------Showing information of all the available assets--------------------------------------')
       let numberAssets: number = this.stock?.getAllEntries().length as number
       console.log(`Number of assets available: ${numberAssets}`)
       let names = ''
@@ -42,9 +45,11 @@ export class AssetInformGenerator extends InformGenerator {
         totalCrownValue += asset.crown_value
       })
       console.log(`Total crown value: ${totalCrownValue}`)
+      console.log('---------------------------------------------------------------------------------------------')
     }
   }
   generateTypeInform(type?: AssetType) {
+    console.log(`-------------------Showing information of all ${type} assets--------------------------------------`)
     let assets: Asset[] = this.stock?.getAllEntries() as Asset[]
     console.log(`Number of assets of type ${type}: ${assets.length}`)
     let names = ''
@@ -58,5 +63,6 @@ export class AssetInformGenerator extends InformGenerator {
       crowns += asset.crown_value
     })
     console.log(`Total value of ${type} assets: ${crowns} crowns`)
+    console.log('---------------------------------------------------------------------------------------------')
   }
 }
