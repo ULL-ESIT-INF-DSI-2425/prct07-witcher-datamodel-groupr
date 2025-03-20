@@ -1,11 +1,11 @@
 import {describe, test, expect, vi} from 'vitest'
-import { AssetsDB} from '../src/AssetsDB'
-import { AssetType } from '../src/assets';
-import {InformType, Inventary} from '../src/inventary'
-import { Transactions } from '../src/transactions';
-import { TradersDB } from '../src/tradersDB';
-import { TraderTypes } from '../src/traders';
-import { TransactionsDB } from '../src/transactionsDB';
+import { AssetsDB} from '../../prct07-witcher-datamodel-groupr/src/AssetsDB.js'
+import { AssetType } from '../../prct07-witcher-datamodel-groupr/src/assets.js';
+import {InformType, Inventary} from '../../prct07-witcher-datamodel-groupr/src/inventary.js'
+import { Transactions } from '../../prct07-witcher-datamodel-groupr/src/transactions.js';
+import { TradersDB } from '../../prct07-witcher-datamodel-groupr/src/tradersDB.js';
+import { TraderTypes } from '../../prct07-witcher-datamodel-groupr/src/traders.js';
+import { TransactionsDB } from '../../prct07-witcher-datamodel-groupr/src/transactionsDB.js';
 
 describe('Tests of Inventory class', () => {
   // A new assets DB

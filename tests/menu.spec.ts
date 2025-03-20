@@ -10,8 +10,13 @@ import { AssetsDB } from '../src/AssetsDB.js';
 import { TradersDB } from '../src/tradersDB.js';
 import { ClientsDB } from '../src/clientsDB.js';
 
-// Mock de inquirer
-vi.mock('inquirer');
+vi.mock('inquirer', () => ({
+  default: {
+    prompt: vi.fn()
+      .mockResolvedValueOnce({ action: 'List goods' })  // Primera iteración
+      .mockResolvedValueOnce({ action: 'Exit' })        // Segunda iteración para salir
+  }
+}));
 
 describe('Inventory Management Functions', () => {
   let assetsDB: AssetsDB;

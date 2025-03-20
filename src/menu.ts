@@ -284,44 +284,7 @@ export async function addTrader(db: TradersDB) {
 
 
 export async function listGoods(db: AssetsDB) {
-  const input = await inquirer.prompt([
-    {
-      type: 'list',
-      name: 'filter',
-      message: 'Do you want to order the list of goods by any criteria?',
-      choices: [
-        'NONE',
-        'NAME',
-        'CROWN VALUE'
-      ]
-    },
-    {
-      type: 'list',
-      name: 'order',
-      message: 'Do you want to order the list of goods in ascending or descending order? (if applicable)',
-      when: (answers) => answers.filter !== 'NONE',
-      choices: [
-        'ASC',
-        'DESC'
-      ]
-    }
-  ]);
-
-  let assets: Asset[] = [];
-
-  if (input.filter === 'NONE') {
-    assets = db.getAllEntries();
-  }
-  else {
-    switch (input.filter) {
-      case 'NAME':
-        assets = db.getAssetsByName(input.order);
-        break;
-      case 'CROWN VALUE':
-        assets = db.getAssetsByCrownValue(input.order);
-        break;
-    }
-  }
+  const assets: Asset[] = db.getAllEntries();
 
   if (assets.length === 0) {
     console.log("\n🔴 No assets registered in the inventory.\n");
@@ -340,22 +303,22 @@ export async function listGoods(db: AssetsDB) {
     let assetType: AssetType;
     switch (asset.type) {
       case AssetType.PRODUCT:
-      assetType = AssetType.PRODUCT;
-      break;
+        assetType = AssetType.PRODUCT;
+        break;
       case AssetType.ARMOR:
-      assetType = AssetType.ARMOR;
-      break;
+        assetType = AssetType.ARMOR;
+        break;
       case AssetType.WEAPON:
-      assetType = AssetType.WEAPON;
-      break;
+        assetType = AssetType.WEAPON;
+        break;
       case AssetType.POTION:
-      assetType = AssetType.POTION;
-      break;
+        assetType = AssetType.POTION;
+        break;
       case AssetType.BOOK:
-      assetType = AssetType.BOOK;
-      break;
+        assetType = AssetType.BOOK;
+        break;
       default:
-      assetType = AssetType.UNKNOWN;
+        assetType = AssetType.UNKNOWN;
     }
     console.log(`   🗡️  Type: ${assetType}`);
     console.log("-------------------------------------------");
@@ -814,13 +777,4 @@ async function generateInformMenu(inventary: Inventary) {
   const assetType = informOptions.assetType ? (informOptions.assetType as AssetType) : undefined;
   inventary.generateInform(informType, id, assetType);
 }
-
-// Simulated databases in memory
-const assetsDB = new AssetsDB();
-const tradersDB = new TradersDB();
-const clientsDB = new ClientsDB();
-const inventary = new Inventary();
-
-// Start the menu
-mainMenu(assetsDB, tradersDB, clientsDB, inventary);
 
