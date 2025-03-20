@@ -32,17 +32,26 @@ export class Inventary {
     switch(informt) {
       case InformType.STOCKSTATE:
         const stockInform = new AssetInformGenerator(this._assets)
+        if (id === undefined) {
+          console.log('Generating inform of the assets...')
+        }
+        else {
+          console.log('Generating inform of an asset...')
+        }
         stockInform.generateInform(id)
         break
       case InformType.STOCKTYPE:
+        console.log('Generating infrom of a stock type...')
         const stockTypeInform = new AssetInformGenerator(this._assets)
         stockTypeInform.generateTypeInform(assetType)
         break
       case InformType.BENEFITS:
+        console.log('Generating inform of benefits...')
         const benefitInform = new BenefitsInformGenerator(this._transactions)
         benefitInform.generateInform()
         break
       case InformType.TRADERHISTORY:
+        console.log('Generating inform of a trader...')
         const traderInform = new TraderInformGenerator(this._transactions)
         traderInform.generateInform(id)
         break 
