@@ -3,17 +3,17 @@
  */
 export enum AssetType {
   /** Represents a product-type asset. */
-  PRODUCT = 'product',
+  PRODUCT,
   /** Represents an armor-type asset. */
-  ARMOR = 'armor',
+  ARMOR,
   /** Represents a weapon-type asset. */
-  WEAPON = 'weapon',
+  WEAPON,
   /** Represents a potion-type asset. */
-  POTION = 'potion',
+  POTION,
   /** Represents a book-type asset. */
-  BOOK = 'book',
+  BOOK,
   /** Represents an unknown asset type. */
-  UNKNOWN = 'unknown'
+  UNKNOWN
 }
 
 /**

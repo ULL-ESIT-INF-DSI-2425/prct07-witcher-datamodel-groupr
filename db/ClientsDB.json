@@ -1,10 +1,64 @@
 {
   "data": [
     {
-      "name": "John",
-      "id": "1",
-      "location": "Town",
-      "race": 0
+      "id": 1,
+      "name": "Sir Cedric",
+      "race": 0,
+      "location": "Castillo de Valeria"
+    },
+    {
+      "id": 2,
+      "name": "Elandor el Sabio",
+      "race": 1,
+      "location": "Bosque de Lórindar"
+    },
+    {
+      "id": 3,
+      "name": "Throg el Destructor",
+      "race": 6,
+      "location": "Montañas Grises"
+    },
+    {
+      "id": 4,
+      "name": "Morgana la Hechicera",
+      "race": 0,
+      "location": "Torre de los Secretos"
+    },
+    {
+      "id": 5,
+      "name": "Ulric Martillo de Hierro",
+      "race": 5,
+      "location": "Ciudad Subterránea de Khaz-Dur"
+    },
+    {
+      "id": 6,
+      "name": "Selene la Exploradora",
+      "race": 0,
+      "location": "Llanuras del Alba"
+    },
+    {
+      "id": 7,
+      "name": "Galdor el Encantador",
+      "race": 1,
+      "location": "Academia Arcana"
+    },
+    {
+      "id": 8,
+      "name": "Bjorn el Berserker",
+      "race": 0,
+      "location": "Tierras del Norte"
+    },
+    {
+      "id": 9,
+      "name": "Zarak el Mercenario",
+      "race": 5,
+      "location": "Puerto de Sangreluz"
+    },
+    {
+      "id": 10,
+      "name": "Velia la Bailarina de Sombras",
+      "race": 0,
+      "location": "Bajo Mundo de Eldoria"
     }
   ]
 }

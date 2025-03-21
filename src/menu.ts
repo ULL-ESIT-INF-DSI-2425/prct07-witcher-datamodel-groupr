@@ -9,6 +9,7 @@ import { Clients, Race } from './clients.js';
 import { Transactions } from './transactions.js';
 import { Inventary, InformType } from './inventary.js';
 
+
 export async function addTransaction(inv: Inventary) {
   const newTransaction = await inquirer.prompt([
     {
@@ -147,7 +148,7 @@ export async function addAsset(db: AssetsDB) {
       type: 'input',
       name: 'id',
       message: 'Enter the ID of the asset',
-      validate(input:string){
+      validate(input: string) {
         if (!input || isNaN(Number(input))) {
           return 'Please enter a valid number for the ID.';
         }
@@ -156,43 +157,33 @@ export async function addAsset(db: AssetsDB) {
     },
     {
       type: 'input',
-      name:'name',
+      name: 'name',
       message: 'Enter the name of the asset'
     },
     {
       type: 'input',
-      name:'description',
+      name: 'description',
       message: 'Enter description of the asset'
     },
     {
       type: 'input',
-      name:'material',
-      message:'Enter the material of the asset'
+      name: 'material',
+      message: 'Enter the material of the asset'
     },
     {
       type: 'input',
       name: 'type',
       message: 'Enter the type of asset',
       validate(input: string) {
-        switch(input.toUpperCase()) {
-          case 'PRODUCT':
-            return true
-          case 'ARMOR':
-            return true
-          case 'WEAPON':
-            return true
-          case 'POTION':
-            return true
-          case 'BOOK':
-            return true
-          default:
-            return 'Introduce a correct type of asset'
+        if (!Object.keys(AssetType).includes(input.toUpperCase())) {
+          return 'Please enter a valid type of asset (PRODUCT, ARMOR, WEAPON, POTION, BOOK).';
         }
+        return true;
       }
     },
     {
-      type:'input',
-      name:'weight',
+      type: 'input',
+      name: 'weight',
       message: 'Enter the weight of the asset',
       validate(input: string) {
         if (!input || isNaN(Number(input))) {
@@ -203,29 +194,28 @@ export async function addAsset(db: AssetsDB) {
     },
     {
       type: 'input',
-      name:'crown_value',
-      message:'Enter the crown value of the asset',
+      name: 'crown_value',
+      message: 'Enter the crown value of the asset',
       validate(input: string) {
         if (!input || isNaN(Number(input))) {
-          return 'Please enter a valid number for the weight.';
+          return 'Please enter a valid number for the crown value.';
         }
         return true;
       }
     }
-  ])
+  ]);
 
   const asset: Asset = {
     id: Number(newAsset.id),
     name: newAsset.name,
     description: newAsset.description,
     material: newAsset.material,
-    weight: newAsset.weight,
-    crown_value : newAsset.crown_value,
-    type: AssetType[newAsset.type.toUpperCase() as keyof typeof AssetType]
-  }
+    weight: Number(newAsset.weight),
+    crown_value: Number(newAsset.crown_value),
+    type: AssetType[newAsset.type as keyof typeof AssetType]
+  };
 
-  //Añadir bien a la db
-  db.addEntry(asset)
+  db.addEntry(asset);
 }
 
 export async function addTrader(db: TradersDB) {
@@ -617,7 +607,7 @@ export async function modifyTraders(db: TradersDB) {
   const filter = {
     name: modifyTradersFilter.name === "" ? undefined : modifyTradersFilter.name,
     type: modifyTradersFilter.type === "" ? undefined : (Object.values(TraderTypes).includes(modifyTradersFilter.type as TraderTypes) ? (modifyTradersFilter.type as TraderTypes) : undefined),
-    weight: modifyTradersFilter.location === "" ? undefined : modifyTradersFilter.location
+    location: modifyTradersFilter.location === "" ? undefined : modifyTradersFilter.location
   }
   db.modifyEntry(Number(modifyTradersFilter.id),filter);
 }
@@ -654,8 +644,8 @@ export async function modifyClients(db: ClientsDB) {
 
   const filter = {
     name: modifyClientsFilter.name === "" ? undefined : modifyClientsFilter.name,
-    type: modifyClientsFilter.race === "" ? undefined : (Object.values(Race).includes(modifyClientsFilter.race as Race) ? (modifyClientsFilter.race as Race) : undefined),
-    weight: modifyClientsFilter.location === "" ? undefined : modifyClientsFilter.location
+    race: modifyClientsFilter.race === "" ? undefined : (Object.values(Race).includes(modifyClientsFilter.race as Race) ? (modifyClientsFilter.race as Race) : undefined),
+    location: modifyClientsFilter.location === "" ? undefined : modifyClientsFilter.location
   }
   db.modifyEntry(Number(modifyClientsFilter.id), filter);
 }
@@ -764,7 +754,7 @@ async function generateInformMenu(inventary: Inventary) {
       message: 'Enter the asset type (if applicable, leave empty otherwise):',
       when: (answers) => answers.informType === 'STOCKTYPE',
       validate(input: string) {
-        if (input && !Object.values(AssetType).includes(input as AssetType)) {
+        if (input && !Object.keys(AssetType).includes(input.toUpperCase())) {
           return 'Please enter a valid asset type.';
         }
         return true;
@@ -778,3 +768,10 @@ async function generateInformMenu(inventary: Inventary) {
   inventary.generateInform(informType, id, assetType);
 }
 
+
+const assetsDB = new AssetsDB();
+const tradersDB = new TradersDB();
+const clientsDB = new ClientsDB();
+const inventary = new Inventary();
+
+mainMenu(assetsDB, tradersDB, clientsDB, inventary)

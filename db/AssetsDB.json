@@ -2,12 +2,183 @@
   "data": [
     {
       "id": 1,
-      "name": "Dragon's sword",
-      "description": "Last skin of the dragon",
-      "material": "Dragon skin",
-      "weight": "20",
-      "crown_value": "1000",
-      "type": "Weapon"
+      "name": "Espada de Fuego Eterno",
+      "description": "Forjada en los volcanes de Kraz-Thun, arde sin consumir metal.",
+      "material": "Mithril",
+      "weight": 5,
+      "crown_value": 500,
+      "type": 2
+    },
+    {
+      "id": 2,
+      "name": "Arco del Bosque Eterno",
+      "description": "Bendecido por los elfos de Lórindar, nunca falla un disparo.",
+      "material": "Madera Élfica",
+      "weight": 2,
+      "crown_value": 600,
+      "type": 2
+    },
+    {
+      "id": 3,
+      "name": "Escudo de la Guardia Real",
+      "description": "Resistente a la magia oscura y capaz de desviar rayos.",
+      "material": "Acero Rúnico",
+      "weight": 8,
+      "crown_value": 750,
+      "type": 1
+    },
+    {
+      "id": 4,
+      "name": "Daga de la Sombra Nocturna",
+      "description": "Absorbe la luz y permite moverse sin ser visto.",
+      "material": "Ónix Oscuro",
+      "weight": 1,
+      "crown_value": 450,
+      "type": 2
+    },
+    {
+      "id": 5,
+      "name": "Martillo de los Titanes",
+      "description": "Creado por los herreros enanos, capaz de derribar murallas.",
+      "material": "Adamantita",
+      "weight": 12,
+      "crown_value": 900,
+      "type": 2
+    },
+    {
+      "id": 6,
+      "name": "Cetro del Archimago",
+      "description": "Contiene un fragmento del maná puro del Reino Celestial.",
+      "material": "Cristal Arcano",
+      "weight": 3,
+      "crown_value": 1100,
+      "type": 3
+    },
+    {
+      "id": 7,
+      "name": "Armadura de Dragón Rojo",
+      "description": "Hecha con escamas de dragón, inmune al fuego.",
+      "material": "Escamas de Dragón",
+      "weight": 15,
+      "crown_value": 1500,
+      "type": 1
+    },
+    {
+      "id": 8,
+      "name": "Capa de las Sombras",
+      "description": "Permite desaparecer entre las tinieblas.",
+      "material": "Tela Encantada",
+      "weight": 1,
+      "crown_value": 400,
+      "type": 0
+    },
+    {
+      "id": 9,
+      "name": "Botas del Viento",
+      "description": "Aumentan la velocidad del portador.",
+      "material": "Cuero Ligero",
+      "weight": 2,
+      "crown_value": 550,
+      "type": 0
+    },
+    {
+      "id": 10,
+      "name": "Lanza de Hielo Eterno",
+      "description": "Forjada con escarcha de los dioses nórdicos.",
+      "material": "Cristal de Hielo",
+      "weight": 6,
+      "crown_value": 800,
+      "type": 2
+    },
+    {
+      "id": 11,
+      "name": "Anillo del Nigromante",
+      "description": "Permite controlar a los muertos.",
+      "material": "Ónix Maldito",
+      "weight": 0.5,
+      "crown_value": 1200,
+      "type": 3
+    },
+    {
+      "id": 12,
+      "name": "Amuleto de la Luna Plateada",
+      "description": "Brilla con la luz de la luna y repele criaturas oscuras.",
+      "material": "Plata Lunar",
+      "weight": 0.3,
+      "crown_value": 900,
+      "type": 3
+    },
+    {
+      "id": 13,
+      "name": "Hacha de Guerra del Rey Bárbaro",
+      "description": "Un arma legendaria que sólo los más fuertes pueden blandir.",
+      "material": "Hierro Sangriento",
+      "weight": 10,
+      "crown_value": 1300,
+      "type": 2
+    },
+    {
+      "id": 14,
+      "name": "Báculo de los Ancestros",
+      "description": "Lleva la sabiduría de los hechiceros antiguos.",
+      "material": "Madera Sagrada",
+      "weight": 4,
+      "crown_value": 1000,
+      "type": 4
+    },
+    {
+      "id": 15,
+      "name": "Casco de la Luz Divina",
+      "description": "Protege al usuario de la magia negra.",
+      "material": "Oro Bendito",
+      "weight": 5,
+      "crown_value": 950,
+      "type": 1
+    },
+    {
+      "id": 16,
+      "name": "Cinturón del Gigante",
+      "description": "Otorga una fuerza sobrehumana.",
+      "material": "Cuero de Bestia Mítica",
+      "weight": 2,
+      "crown_value": 850,
+      "type": 0
+    },
+    {
+      "id": 17,
+      "name": "Ballesta del Cazador de Bestias",
+      "description": "Especialmente diseñada para cazar monstruos gigantes.",
+      "material": "Madera Encantada",
+      "weight": 7,
+      "crown_value": 1200,
+      "type": 2
+    },
+    {
+      "id": 18,
+      "name": "Brújula de los Mundos Perdidos",
+      "description": "Apunta siempre hacia la mayor riqueza cercana.",
+      "material": "Oro Místico",
+      "weight": 0.5,
+      "crown_value": 700,
+      "type": 0
+    },
+    {
+      "id": 19,
+      "name": "Pergamino de los Mil Hechizos",
+      "description": "Contiene conjuros desconocidos.",
+      "material": "Papel Encantado",
+      "weight": 0.2,
+      "crown_value": 1300,
+      "type": 4
+    },
+    {
+      "id": 20,
+      "name": "Cáliz del Rey Demonio",
+      "description": "Otorga poderes oscuros a quien beba de él.",
+      "material": "Cristal Maldito",
+      "weight": 1,
+      "crown_value": 2000,
+      "type": 3
     }
   ]
 }

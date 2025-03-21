@@ -1,10 +1,40 @@
 {
   "data": [
     {
+      "id": 1,
+      "name": "Baldric el Comerciante",
       "type": 0,
-      "location": "Forge",
-      "name": "Smith",
-      "id": "1"
+      "location": "Mercado de Eldoria"
+    },
+    {
+      "id": 2,
+      "name": "Ygritte la Forjadora",
+      "type": 4,
+      "location": "Fortaleza de Karak"
+    },
+    {
+      "id": 3,
+      "name": "Tobias el Astuto",
+      "type": 2,
+      "location": "Puerto de Brisaveloz"
+    },
+    {
+      "id": 4,
+      "name": "Gretchen la Vidente",
+      "type": 1,
+      "location": "Bosque de los Susurros"
+    },
+    {
+      "id": 5,
+      "name": "Dorn el Errante",
+      "type": 2,
+      "location": "Caravana Nómada"
+    },
+    {
+      "id": 6,
+      "name": "Alaric el Viejo",
+      "type": 2,
+      "location": "Gran Biblioteca Arcana"
     }
   ]
 }
