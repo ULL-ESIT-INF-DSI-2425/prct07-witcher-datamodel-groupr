@@ -135,7 +135,7 @@ export async function addClient (db: ClientsDB) {
     name: newClient.name,
     id: newClient.id,
     location: newClient.location,
-    race: Race[newClient.race.toUpperCase() as keyof typeof Race]
+    race: Race[newClient.race as keyof typeof Race]
   }
 
   db.addEntry(client);
@@ -221,7 +221,7 @@ export async function addAsset(db: AssetsDB) {
     material: newAsset.material,
     weight: newAsset.weight,
     crown_value : newAsset.crown_value,
-    type: newAsset.type
+    type: AssetType[newAsset.type.toUpperCase() as keyof typeof AssetType]
   }
 
   //Añadir bien a la db
@@ -320,7 +320,7 @@ export async function listGoods(db: AssetsDB) {
       default:
         assetType = AssetType.UNKNOWN;
     }
-    console.log(`   🗡️  Type: ${assetType}`);
+    console.log(`   🗡️  Type: ${asset.type}`);
     console.log("-------------------------------------------");
   });
 

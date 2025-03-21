@@ -80,4 +80,9 @@ export abstract class GenericDatabase<T> {
    * @param filter - The fields to update.
    */
   abstract modifyEntry(key: number, filter: {}): void;
+
+  resetDB(): void {
+    this._db.data.data = []; // Vacía los datos
+    this._db.write(); // Guarda los cambios en el fichero
+  }
 }
