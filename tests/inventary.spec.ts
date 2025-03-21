@@ -29,25 +29,27 @@ describe('Tests of Inventory class', () => {
     inventary.registerTransaction(transactionEntry);
     expect(consoleSpy).toHaveBeenNthCalledWith(1, `Adding a new transaction...`)
     expect(consoleSpy).toHaveBeenNthCalledWith(2, `Registered succesfully`)
-    consoleSpy.mockRestore();
+    consoleSpy.mockClear();
     //If we try adding the same value, it should raise an error
     expect(() => {
-      inventary.registerTransaction(null as any); // Simulamos un argumento inválido
+      inventary.registerTransaction(transactionEntry); // Simulamos un argumento inválido
     }).toThrow('Value not inserted. Value already in table.');
   })
   test('Generate inform method', () => {
     const consoleSpy = vi.spyOn(console, 'log')
     inventary.generateInform(InformType.STOCKSTATE)
     expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Generating inform of the assets...')
-    consoleSpy.mockRestore()
+    consoleSpy.mockClear()
     inventary.generateInform(InformType.STOCKSTATE, 1)
     expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Generating inform of an asset...')
-    consoleSpy.mockRestore()
+    consoleSpy.mockClear()
     inventary.generateInform(InformType.STOCKTYPE, undefined, AssetType.WEAPON)
-    expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Generating inform of benefits...')
-    consoleSpy.mockRestore()
+    expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Generating infrom of a stock type...')
+    consoleSpy.mockClear()
     inventary.generateInform(InformType.BENEFITS)
+    expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Generating inform of benefits...')
+    consoleSpy.mockClear()
+    inventary.generateInform(InformType.TRADERHISTORY)
     expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Generating inform of a trader...')
-    consoleSpy.mockRestore()
   })
 })

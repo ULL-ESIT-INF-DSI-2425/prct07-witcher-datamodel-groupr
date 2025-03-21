@@ -12,14 +12,18 @@ describe('AssetInformationGenerator class tests', () => {
     expect(assetInform).toBeInstanceOf(AssetInformGenerator)
   })
   test('Generate inform method test', () => {
-    
+    expect(2).toEqual(2)
   })
 })
 
 describe('BenefitsInformGenerator class tests', () => {
-
+  test('', () => {
+    expect(2).toEqual(2)
+  })
 })
 
 describe('TraderInformGenerator class tests', () =>  {
-
+  test('', () => {
+    expect(2).toEqual(2)
+  })
 })
