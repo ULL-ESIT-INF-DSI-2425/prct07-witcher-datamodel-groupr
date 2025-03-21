@@ -2,7 +2,7 @@ import { describe, it, expect } from 'vitest';
 import { TransactionsDB } from '../src/transactionsDB';
 import { Transactions } from '../src/transactions';
 
-describe('Assets database tests', () => {
+describe('Transactions database tests', () => {
   const db = new TransactionsDB();
   const entry: Transactions = { id: 9999, date: 'TestDate', clientID: 9999, productName: 'TestProduct', buying: true, productID: 1, involver_crowns: 1 }
   const entry2: Transactions = { id: 9998, date: 'TestDate2', clientID: 9999, productName: 'TestProduct2', buying: false, productID: 2, involver_crowns: 1 }
