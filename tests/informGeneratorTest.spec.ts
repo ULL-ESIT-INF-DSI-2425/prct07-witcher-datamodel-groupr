@@ -3,9 +3,7 @@ import { TransactionsDB } from "../src/transactionsDB";
 import { BenefitsInformGenerator } from "../src/benefitsInformGenerator";
 import { TraderInformGenerator } from "../src/traderInformGenerator";
 import { AssetInformGenerator } from "../src/assetInformGenerator";
-import { AssetType} from "../src/assets";
-import {vi} from 'vitest'
-import { describe, expect, test, it} from 'vitest'
+import { describe, expect, test, it, vi } from 'vitest'
 
 describe('AssetInformationGenerator class tests', () => {
   it('', async () => {

@@ -1,7 +1,4 @@
 import { AssetsDB } from "./AssetsDB.js"
-import { ClientsDB } from "./clientsDB.js"
-import { InformType } from "./inventary.js"
-import { TradersDB } from "./tradersDB.js"
 import { TransactionsDB } from "./transactionsDB.js"
 
 /**

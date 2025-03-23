@@ -1,7 +1,7 @@
 import { TransactionsDB } from "./transactionsDB.js";
 import { Transactions } from "./transactions.js";
 import { AssetsDB } from "./AssetsDB.js";
-import { Asset, AssetType } from "./assets.js";
+import { AssetType } from "./assets.js";
 import { AssetInformGenerator } from './assetInformGenerator.js'
 import { BenefitsInformGenerator } from "./benefitsInformGenerator.js";
 import { TraderInformGenerator } from "./traderInformGenerator.js";
@@ -15,8 +15,8 @@ export enum InformType { STOCKSTATE, STOCKTYPE, BENEFITS, TRADERHISTORY}
  * Class that represents the inventary of the company
  */
 export class Inventary {
-  private _assets: AssetsDB;
-  private _transactions: TransactionsDB;
+  private readonly _assets: AssetsDB;
+  private readonly _transactions: TransactionsDB;
   /**
    * Constructor of the class
    */
@@ -41,7 +41,6 @@ export class Inventary {
     const asset = db.getAllEntries().filter((a) => a.id === id)
     if (asset.length === 0) {
       console.log('Asset not found')
-      return
     }
     else {
       transactionsDB.addEntry({
@@ -98,7 +97,6 @@ export class Inventary {
     }
     else {
       console.log('Asset already in the database')
-      return 
     }
   }
 
@@ -148,6 +146,5 @@ export class Inventary {
       default:
         console.log('Choose a correct inform type (STOCKSTATE, STOCKTYPE, BENEFITS, TRADERHISTORY')
     }
-    return
   }
 }

@@ -3,8 +3,6 @@ import { AssetsDB} from '../../prct07-witcher-datamodel-groupr/src/AssetsDB.js'
 import { AssetType } from '../../prct07-witcher-datamodel-groupr/src/assets.js';
 import {InformType, Inventary} from '../../prct07-witcher-datamodel-groupr/src/inventary.js'
 import { Transactions } from '../../prct07-witcher-datamodel-groupr/src/transactions.js';
-import { TradersDB } from '../../prct07-witcher-datamodel-groupr/src/tradersDB.js';
-import { TraderTypes } from '../../prct07-witcher-datamodel-groupr/src/traders.js';
 import { TransactionsDB } from '../../prct07-witcher-datamodel-groupr/src/transactionsDB.js';
 
 describe('Tests of Inventory class', () => {

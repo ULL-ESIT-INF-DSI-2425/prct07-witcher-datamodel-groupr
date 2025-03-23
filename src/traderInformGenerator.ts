@@ -1,5 +1,4 @@
 import { InformGenerator } from "./informGenerator.js";
-import { TradersDB } from "./tradersDB.js";
 import { TransactionsDB } from "./transactionsDB.js";
 
 /**

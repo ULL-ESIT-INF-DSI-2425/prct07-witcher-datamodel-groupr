@@ -5,11 +5,13 @@ import {AssetsDB} from "./AssetsDB.js"
 import {TradersDB} from "./tradersDB.js"
 import {ClientsDB} from './clientsDB.js';
 import { Clients, Race } from './clients.js';
-//import { TransactionsDB } from './transactionsDB.js'; // Assuming you have a database class for transactions
 import { Transactions } from './transactions.js';
 import { Inventary, InformType } from './inventary.js';
 
-
+/**
+ * Function for add a transaction
+ * @param inv variable of inventary
+ */
 export async function addTransaction(inv: Inventary) {
   const newTransaction = await inquirer.prompt([
     {
@@ -94,6 +96,10 @@ export async function addTransaction(inv: Inventary) {
   console.log('\n✅ Transaction added successfully!\n');
 }
 
+/**
+ * Function for add a client
+ * @param db variable of clientsDB
+ */
 export async function addClient (db: ClientsDB) {
   const newClient = await inquirer.prompt([
     {
@@ -142,6 +148,10 @@ export async function addClient (db: ClientsDB) {
   db.addEntry(client);
 }
 
+/**
+ * Function for add a asset
+ * @param db variable of assetsDB
+ */
 export async function addAsset(db: AssetsDB) {
   const newAsset = await inquirer.prompt([
     {
@@ -218,6 +228,10 @@ export async function addAsset(db: AssetsDB) {
   db.addEntry(asset);
 }
 
+/**
+ * Function for add a trader
+ * @param db variable of tradersDB
+ */
 export async function addTrader(db: TradersDB) {
   const newtrader = await inquirer.prompt([
     {
@@ -261,7 +275,6 @@ export async function addTrader(db: TradersDB) {
 
   ])
 
-  // Añadir mercader
   const trader: Trader = {
     type: TraderTypes[newtrader.type as keyof typeof TraderTypes],
     location: newtrader.location,
@@ -272,7 +285,10 @@ export async function addTrader(db: TradersDB) {
   db.addEntry(trader)
 }
 
-
+/**
+ * Function for list goods
+ * @param db variable of assetsDB
+ */
 export async function listGoods(db: AssetsDB) {
   const assets: Asset[] = db.getAllEntries();
 
@@ -290,26 +306,6 @@ export async function listGoods(db: AssetsDB) {
     console.log(`   📜 Description: ${asset.description}`);
     console.log(`   ⚖️  Weight: ${asset.weight} kg | 💰 Value: ${asset.crown_value} crowns`);
     console.log(`   🛠️  Material: ${asset.material}`);
-    let assetType: AssetType;
-    switch (asset.type) {
-      case AssetType.PRODUCT:
-        assetType = AssetType.PRODUCT;
-        break;
-      case AssetType.ARMOR:
-        assetType = AssetType.ARMOR;
-        break;
-      case AssetType.WEAPON:
-        assetType = AssetType.WEAPON;
-        break;
-      case AssetType.POTION:
-        assetType = AssetType.POTION;
-        break;
-      case AssetType.BOOK:
-        assetType = AssetType.BOOK;
-        break;
-      default:
-        assetType = AssetType.UNKNOWN;
-    }
     console.log(`   🗡️  Type: ${asset.type}`);
     console.log("-------------------------------------------");
   });
@@ -317,6 +313,10 @@ export async function listGoods(db: AssetsDB) {
   console.log("\n🏹 End of the list.\n");
 }
 
+/**
+ * Function for list traders
+ * @param db variable of tradersDB
+ */
 export async function listTraders(db: TradersDB) {
   const traders: Trader[] = db.getAllEntries();
 
@@ -359,6 +359,10 @@ export async function listTraders(db: TradersDB) {
   console.log("\n🏹 End of the list.\n");
 }
 
+/**
+ * Function for list clients
+ * @param db variable of clientsDB
+ */
 export async function listClients(db: ClientsDB) {
   const clients: Clients[] = db.getAllEntries();
 
@@ -407,6 +411,10 @@ export async function listClients(db: ClientsDB) {
   console.log("\n🏹 End of the list.\n");
 }
 
+/**
+ * Function for delete goods
+ * @param db variable of assetsDB
+ */
 export async function deleteGoods(db: AssetsDB) {
   const deleteAssetsFilter = await inquirer.prompt([
     {
@@ -458,6 +466,10 @@ export async function deleteGoods(db: AssetsDB) {
   db.deleteEntry(filter);
 }
 
+/**
+ * Function for delete traders
+ * @param db variable of tradersDB
+ */
 export async function deleteTraders(db: TradersDB) {
   const deleteTradersFilter = await inquirer.prompt([
     {
@@ -491,6 +503,10 @@ export async function deleteTraders(db: TradersDB) {
   db.deleteEntry(filter);
 }
 
+/**
+ * Function for delete clients
+ * @param db variable of clientsDB
+ */
 export async function deleteClients(db: ClientsDB) {
   const deleteClientsFilter = await inquirer.prompt([
     {
@@ -524,6 +540,10 @@ export async function deleteClients(db: ClientsDB) {
   db.deleteEntry(filter);
 }
 
+/**
+ * Function for modify goods
+ * @param db variable of assetsDB
+ */
 export async function modifyGoods(db: AssetsDB) {
   const modifyAssetsFilter = await inquirer.prompt([
     {
@@ -574,6 +594,10 @@ export async function modifyGoods(db: AssetsDB) {
   db.modifyEntry(Number(modifyAssetsFilter.id), filter);
 }
 
+/**
+ * Function for modify traders
+ * @param db variable of tradersDB
+ */
 export async function modifyTraders(db: TradersDB) {
   const modifyTradersFilter = await inquirer.prompt([
     {
@@ -612,6 +636,10 @@ export async function modifyTraders(db: TradersDB) {
   db.modifyEntry(Number(modifyTradersFilter.id),filter);
 }
 
+/**
+ * Function for modify clients
+ * @param db variable of clientsDB
+ */
 export async function modifyClients(db: ClientsDB) {
   const modifyClientsFilter = await inquirer.prompt([
     {
@@ -650,6 +678,13 @@ export async function modifyClients(db: ClientsDB) {
   db.modifyEntry(Number(modifyClientsFilter.id), filter);
 }
 
+/**
+ * Function for main menu
+ * @param assetsDB variable of AssetsDB
+ * @param tradersDB variable of TradersDB
+ * @param clientsDB variable of ClientsDB
+ * @param inventary variable of Inventary
+ */
 export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clientsDB: ClientsDB, inventary: Inventary) {
   const options = await inquirer.prompt([
     {
@@ -723,7 +758,11 @@ export async function mainMenu(assetsDB: AssetsDB, tradersDB: TradersDB, clients
   await mainMenu(assetsDB, tradersDB, clientsDB, inventary);
 }
 
-async function generateInformMenu(inventary: Inventary) {
+/**
+ * Function for generate inform menu
+ * @param inventary variable of Inventary
+ */
+export async function generateInformMenu(inventary: Inventary) {
   const informOptions = await inquirer.prompt([
     {
       type: 'list',

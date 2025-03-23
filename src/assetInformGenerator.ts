@@ -1,7 +1,6 @@
 import { AssetsDB } from "./AssetsDB.js";
-import { AssetType } from "./assets.js";
+import { Asset, AssetType } from "./assets.js";
 import { InformGenerator } from "./informGenerator.js";
-import { Asset } from "./assets.js";
 
 /**
  * This class is a subclass of InformGenerator, it is used to generate information of the assets

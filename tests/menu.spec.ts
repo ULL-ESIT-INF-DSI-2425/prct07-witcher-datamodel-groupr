@@ -3,7 +3,7 @@ import inquirer from 'inquirer';
 import { 
   addTransaction, addClient, addAsset, addTrader, 
   listGoods, listTraders, listClients, 
-  deleteGoods, deleteTraders, deleteClients, modifyClients, modifyGoods,modifyTraders, mainMenu
+  deleteGoods, deleteTraders, deleteClients, modifyClients, modifyGoods,modifyTraders
 } from '../src/menu.js';
 import { Inventary } from '../src/inventary.js';
 import { AssetsDB } from '../src/AssetsDB.js';
