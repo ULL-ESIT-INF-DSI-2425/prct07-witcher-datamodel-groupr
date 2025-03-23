@@ -3,6 +3,9 @@ import { TradersDB } from '../src/tradersDB';
 import { TraderTypes } from '../src/traders';
 
 describe('Traders database tests', () => {
+  it('', async () => {
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+  });
   const db = new TradersDB();
   const entry = { id: 9999, name: 'TestClient', type: TraderTypes.Alchemist, location: 'TestLocation' }
   const entry2 = { id: 9998, name: 'TestClient2', type: TraderTypes.Alchemist, location: 'TestLocation2' }

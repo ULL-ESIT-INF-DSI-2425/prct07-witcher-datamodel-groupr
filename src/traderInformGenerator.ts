@@ -2,12 +2,21 @@ import { InformGenerator } from "./informGenerator.js";
 import { TradersDB } from "./tradersDB.js";
 import { TransactionsDB } from "./transactionsDB.js";
 
+/**
+ * This class is a subclass of InformGenerator, it is used to generate information of the traders 
+ */
 export class TraderInformGenerator extends InformGenerator {
   constructor(transactionDB: TransactionsDB) {
     super(undefined, transactionDB)
   }
+  /**
+   * Generates an infrom of a trader
+   * @param id - The id of the trader to generate the information
+   * @returns 
+   */
   generateInform(id?: number): void {
     if (id === undefined) {
+      console.log('No id was provided')
       return
     }
     let clientIDValue = {

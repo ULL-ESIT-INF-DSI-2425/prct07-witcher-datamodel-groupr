@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { ClientsDB } from '../src/clientsDB';
 import { Race } from '../src/clients';
 
@@ -6,6 +6,11 @@ describe('Clients database tests', () => {
   const db = new ClientsDB();
   const entry = { id: 9999, name: 'TestClient', race: Race.HUMAN, location: 'TestLocation' }
   const entry2 = { id: 9998, name: 'TestClient2', race: Race.HUMAN, location: 'TestLocation2' }
+
+  //Hacer que espere 2 segundos
+  it('', async () => {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  });
 
   it('should add an entry to the database', () => {
     db.addEntry(entry);

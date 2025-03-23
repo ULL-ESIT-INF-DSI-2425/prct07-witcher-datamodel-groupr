@@ -1,4 +1,4 @@
-import {describe, test, expect, vi} from 'vitest'
+import {describe, test, expect, vi, it} from 'vitest'
 import { AssetsDB} from '../../prct07-witcher-datamodel-groupr/src/AssetsDB.js'
 import { AssetType } from '../../prct07-witcher-datamodel-groupr/src/assets.js';
 import {InformType, Inventary} from '../../prct07-witcher-datamodel-groupr/src/inventary.js'
@@ -8,20 +8,15 @@ import { TraderTypes } from '../../prct07-witcher-datamodel-groupr/src/traders.j
 import { TransactionsDB } from '../../prct07-witcher-datamodel-groupr/src/transactionsDB.js';
 
 describe('Tests of Inventory class', () => {
-  // A new assets DB
-  const assetsDb = new AssetsDB();
-  const assetEntry = { id: 9999, name: 'TestAsset', description: 'TestDescription', material: 'TestMaterial', weight: 1, crown_value: 1, type: AssetType.PRODUCT }
-  const assetEntry2 = { id: 9998, name: 'TestAsset2', description: 'TestDescription', material: 'TestMaterial2', weight: 13, crown_value: 2, type: AssetType.PRODUCT }
-  // A new traders DB
-  const tradersDb = new TradersDB();
-  const traderEntry = { id: 9999, name: 'TestClient', type: TraderTypes.Alchemist, location: 'TestLocation' }
-  const traderEntry2 = { id: 9998, name: 'TestClient2', type: TraderTypes.Alchemist, location: 'TestLocation2' }
-  //A new transactions DB
-  const transactionDb = new TransactionsDB();
+  it('', async () => {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  });
+  const db = new TransactionsDB()
+ //A new transactions DB
   const transactionEntry: Transactions = { id: 9999, date: 'TestDate', clientID: 9999, productName: 'TestProduct', buying: true, productID: 1, involver_crowns: 1 }
-  const transactionEntry2: Transactions = { id: 9998, date: 'TestDate2', clientID: 9999, productName: 'TestProduct2', buying: false, productID: 2, involver_crowns: 1 }
   const inventary = new Inventary()
   test('Class constructor', () => {
+    db.resetDB()
     expect(inventary).toBeInstanceOf(Inventary)
   })
   test('Register transaction method', () => {
@@ -34,6 +29,7 @@ describe('Tests of Inventory class', () => {
     expect(() => {
       inventary.registerTransaction(transactionEntry); // Simulamos un argumento inválido
     }).toThrow('Value not inserted. Value already in table.');
+    db.resetDB()
   })
   test('Generate inform method', () => {
     const consoleSpy = vi.spyOn(console, 'log')
@@ -51,5 +47,32 @@ describe('Tests of Inventory class', () => {
     consoleSpy.mockClear()
     inventary.generateInform(InformType.TRADERHISTORY)
     expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Generating inform of a trader...')
+  })
+  test('Buy asset method', () => {
+    const assetDB = new AssetsDB()
+    const transactionsDB = new TransactionsDB()
+    const consoleSpy = vi.spyOn(console, 'log')
+    inventary.buyAsset(9996, 9996, 'TestDate', 1, 'producttest', 1, AssetType.WEAPON)
+    expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Buying asset...')
+    expect(consoleSpy).toHaveBeenNthCalledWith(2, 'Asset bought succesfully')
+    consoleSpy.mockClear()
+    assetDB.deleteEntry({id: 9996})
+    transactionsDB.resetDB()
+  })
+  test('sellAssetMethod', () => {
+    const consoleSpy = vi.spyOn(console, 'log')
+    //adding an asset to the database
+    const assetdb = new AssetsDB()
+    const transactionsDB = new TransactionsDB()
+    assetdb.addEntry({id: 40, name: 'TestAsset', description: 'None', material: 'None', weight: 0, crown_value: 40, type: AssetType.WEAPON})
+    inventary.sellAsset(40, 40, 'TestDate', 40)
+    expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Selling asset...')
+    expect(consoleSpy).toHaveBeenNthCalledWith(2, 'Asset sold succesfully')
+    consoleSpy.mockClear()
+    inventary.sellAsset(40, 40, 'TestDate', 40)
+    expect(consoleSpy).toHaveBeenNthCalledWith(1, 'Selling asset...')
+    expect(consoleSpy).toHaveBeenNthCalledWith(2, 'Asset not found')
+    consoleSpy.mockClear()
+    transactionsDB.resetDB()
   })
 })

@@ -1,13 +1,3 @@
 {
-  "data": [
-    {
-      "id": 9999,
-      "date": "TestDate",
-      "clientID": 9999,
-      "productName": "TestProduct",
-      "buying": true,
-      "productID": 1,
-      "involver_crowns": 1
-    }
-  ]
+  "data": []
 }

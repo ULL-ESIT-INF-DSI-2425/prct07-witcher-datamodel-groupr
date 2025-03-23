@@ -88,6 +88,9 @@ vi.mock('inquirer', () => ({
 
 describe('Inventory Management Functions', () => {
 
+  it('', async () => {
+    await new Promise((resolve) => setTimeout(resolve, 2500));
+  });
   beforeEach(() => {
 
     // Mock de métodos
